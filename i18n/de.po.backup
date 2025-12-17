@@ -50,6 +50,10 @@ msgstr "Projekt"
 msgid "Head of Project"
 msgstr "Projektleiter"
 
+#. module: project_statistic
+#: view string
+msgid "Project Manager"
+msgstr "Projektleiter"
 
 #. module: project_statistic
 #: model:ir.model.fields,field_description:project_statistic.field_project_project__analytic_status_display
@@ -101,12 +105,20 @@ msgstr "Auftrag Steuercodes"
 msgid "Manual Sales Order Amount (NET)"
 msgstr "Manueller Auftragswert (NETTO)"
 
+#. module: project_statistic
+#: view string
+msgid "Expected Revenue (NET)"
+msgstr "Erwarteter Umsatz (NETTO)"
 
 #. module: project_statistic
 #: model:ir.model.fields,field_description:project_statistic.field_project_project__customer_invoiced_amount_net
 msgid "Invoiced Amount (Net)"
 msgstr "Rechnungsbetrag (Netto)"
 
+#. module: project_statistic
+#: view string
+msgid "Invoiced (NET)"
+msgstr "Fakturiert (NETTO)"
 
 #. module: project_statistic
 #: model:ir.model.fields,help:project_statistic.field_project_project__customer_invoiced_amount_net
@@ -118,49 +130,85 @@ msgstr "Nettobetrag der Kundenrechnungen (ohne MwSt.). Dies ist der Basisbetrag 
 msgid "Customer Invoices (NET)"
 msgstr "Kundenrechnungen (NETTO)"
 
+#. module: project_statistic
+#: view string
+msgid "Out. Invoices"
+msgstr "Ausg. Rechnungen"
 
+#. module: project_statistic
+#: view string
+msgid "Outgoing Invoices"
+msgstr "Ausgangsrechnungen"
 
 #. module: project_statistic
 #: model:ir.model.fields,field_description:project_statistic.field_project_project__customer_credit_notes_net
 msgid "Customer Credit Notes (NET)"
 msgstr "Kundengutschriften (NETTO)"
 
+#. module: project_statistic
+#: view string
+msgid "Credit Notes"
+msgstr "Gutschriften"
 
 #. module: project_statistic
 #: model:ir.model.fields,field_description:project_statistic.field_project_project__customer_paid_amount_net
 msgid "Paid Amount (Net)"
 msgstr "Bezahlter Betrag (Netto)"
 
+#. module: project_statistic
+#: view string
+msgid "Paid (NET)"
+msgstr "Bezahlt (NETTO)"
 
 #. module: project_statistic
 #: model:ir.model.fields,field_description:project_statistic.field_project_project__customer_outstanding_amount_net
 msgid "Outstanding Amount (Net)"
 msgstr "Offener Betrag (Netto)"
 
+#. module: project_statistic
+#: view string
+msgid "Outstanding (NET)"
+msgstr "Offen (NETTO)"
 
 #. module: project_statistic
 #: model:ir.model.fields,field_description:project_statistic.field_project_project__customer_invoiced_amount_gross
 msgid "Invoiced Amount (Gross)"
 msgstr "Rechnungsbetrag (Brutto)"
 
+#. module: project_statistic
+#: view string
+msgid "Invoiced (GROSS)"
+msgstr "Fakturiert (BRUTTO)"
 
 #. module: project_statistic
 #: model:ir.model.fields,field_description:project_statistic.field_project_project__customer_paid_amount_gross
 msgid "Paid Amount (Gross)"
 msgstr "Bezahlter Betrag (Brutto)"
 
+#. module: project_statistic
+#: view string
+msgid "Paid (GROSS)"
+msgstr "Bezahlt (BRUTTO)"
 
 #. module: project_statistic
 #: model:ir.model.fields,field_description:project_statistic.field_project_project__customer_outstanding_amount_gross
 msgid "Outstanding Amount (Gross)"
 msgstr "Offener Betrag (Brutto)"
 
+#. module: project_statistic
+#: view string
+msgid "Outstanding (GROSS)"
+msgstr "Offen (BRUTTO)"
 
 #. module: project_statistic
 #: model:ir.model.fields,field_description:project_statistic.field_project_project__customer_skonto_taken
 msgid "Customer Cash Discounts (Skonto)"
 msgstr "Gewährte Skonti"
 
+#. module: project_statistic
+#: view string
+msgid "Discounts Granted"
+msgstr "Gewährte Skonti"
 
 #. module: project_statistic
 #: model:ir.model.fields,help:project_statistic.field_project_project__customer_skonto_taken
@@ -172,6 +220,10 @@ msgstr "Skonti, die Kunden für frühzeitige Zahlung gewährt wurden (Gewährte 
 msgid "Vendor Bills (Net)"
 msgstr "Eingangsrechnungen (Netto)"
 
+#. module: project_statistic
+#: view string
+msgid "Vendor Bills (NET)"
+msgstr "Eingangsrechnungen (NETTO)"
 
 #. module: project_statistic
 #: model:ir.model.fields,help:project_statistic.field_project_project__vendor_bills_total_net
@@ -183,25 +235,45 @@ msgstr "Nettobetrag der Lieferantenrechnungen (ohne MwSt.). Dies sind die Basisk
 msgid "Vendor Bills (NET)"
 msgstr "Lieferantenrechnungen (NETTO)"
 
+#. module: project_statistic
+#: view string
+msgid "Inc. Bills"
+msgstr "Eingangsrech."
 
+#. module: project_statistic
+#: view string
+msgid "Incoming Bills"
+msgstr "Eingangsrechnungen"
 
 #. module: project_statistic
 #: model:ir.model.fields,field_description:project_statistic.field_project_project__vendor_credit_notes_net
 msgid "Vendor Credit Notes (NET)"
 msgstr "Lieferantengutschriften (NETTO)"
 
+#. module: project_statistic
+#: view string
+msgid "Vendor Cr. Notes"
+msgstr "Lieferantengutschr."
 
 #. module: project_statistic
 #: model:ir.model.fields,field_description:project_statistic.field_project_project__vendor_bills_total_gross
 msgid "Vendor Bills (Gross)"
 msgstr "Eingangsrechnungen (Brutto)"
 
+#. module: project_statistic
+#: view string
+msgid "Vendor Bills (GROSS)"
+msgstr "Eingangsrechnungen (BRUTTO)"
 
 #. module: project_statistic
 #: model:ir.model.fields,field_description:project_statistic.field_project_project__vendor_skonto_received
 msgid "Vendor Cash Discounts Received"
 msgstr "Erhaltene Skonti"
 
+#. module: project_statistic
+#: view string
+msgid "Discounts Received"
+msgstr "Erhaltene Skonti"
 
 #. module: project_statistic
 #: model:ir.model.fields,help:project_statistic.field_project_project__vendor_skonto_received
@@ -213,6 +285,10 @@ msgstr "Skonti von Lieferanten für frühzeitige Zahlung (Erhaltene Skonti). Die
 msgid "Adjusted Vendor Bills"
 msgstr "Angepasste Eingangsrechnungen"
 
+#. module: project_statistic
+#: view string
+msgid "Adj. Vendor Bills"
+msgstr "Ang. Eingangsrech."
 
 #. module: project_statistic
 #: model:ir.model.fields,help:project_statistic.field_project_project__adjusted_vendor_bill_amount
@@ -224,6 +300,10 @@ msgstr "Eingangsrechnungen mit angewendetem Aufschlagsfaktor. Formel: Eingangsre
 msgid "Total Hours Booked"
 msgstr "Gebuchte Stunden"
 
+#. module: project_statistic
+#: view string
+msgid "Hours Booked"
+msgstr "Gebuchte Stunden"
 
 #. module: project_statistic
 #: model:ir.model.fields,help:project_statistic.field_project_project__total_hours_booked
@@ -245,7 +325,15 @@ msgstr "Gesamtkosten der Arbeit basierend auf Zeiterfassung (Personalkosten). Be
 msgid "Total Hours Booked (Adjusted)"
 msgstr "Gebuchte Stunden (Angepasst)"
 
+#. module: project_statistic
+#: view string
+msgid "Hours (Adjusted)"
+msgstr "Stunden (Ang.)"
 
+#. module: project_statistic
+#: view string
+msgid "Hours Booked (Adjusted)"
+msgstr "Gebuchte Stunden (Angepasst)"
 
 #. module: project_statistic
 #: model:ir.model.fields,help:project_statistic.field_project_project__total_hours_booked_adjusted
@@ -257,6 +345,10 @@ msgstr "Angepasste Gesamtstunden basierend auf Mitarbeiter-HFC-Faktoren (Stunden
 msgid "Labor Costs (Adjusted)"
 msgstr "Personalkosten (Angepasst)"
 
+#. module: project_statistic
+#: view string
+msgid "Labor Costs (Adj.)"
+msgstr "Personalkosten (Ang.)"
 
 #. module: project_statistic
 #: model:ir.model.fields,help:project_statistic.field_project_project__labor_costs_adjusted
@@ -268,6 +360,10 @@ msgstr "Angepasste Arbeitskosten, berechnet mit dem allgemeinen Stundensatz aus 
 msgid "Other Costs (Net)"
 msgstr "Sonstige Kosten (Netto)"
 
+#. module: project_statistic
+#: view string
+msgid "Other Costs"
+msgstr "Sonstige Kosten"
 
 #. module: project_statistic
 #: model:ir.model.fields,help:project_statistic.field_project_project__other_costs_net
@@ -279,6 +375,10 @@ msgstr "Sonstige interne Kosten ohne Personal- und Eingangsrechnungen (Nettobetr
 msgid "Total Costs (Net)"
 msgstr "Gesamtkosten (Netto)"
 
+#. module: project_statistic
+#: view string
+msgid "Total Costs (NET)"
+msgstr "Gesamtkosten (NETTO)"
 
 #. module: project_statistic
 #: model:ir.model.fields,help:project_statistic.field_project_project__total_costs_net
@@ -290,6 +390,10 @@ msgstr "Gesamte interne Projektkosten ohne Steuern (Nettokosten). Berechnet als:
 msgid "Profit/Loss (Net)"
 msgstr "Gewinn/Verlust (Netto)"
 
+#. module: project_statistic
+#: view string
+msgid "Profit/Loss (NET)"
+msgstr "Gewinn/Verlust (NETTO)"
 
 #. module: project_statistic
 #: model:ir.model.fields,help:project_statistic.field_project_project__profit_loss_net
@@ -301,6 +405,10 @@ msgstr "Projektrentabilität basierend auf NETTO-Beträgen (Gewinn/Verlust Netto
 msgid "Losses (Net)"
 msgstr "Verluste (Netto)"
 
+#. module: project_statistic
+#: view string
+msgid "Losses"
+msgstr "Verluste"
 
 #. module: project_statistic
 #: model:ir.model.fields,help:project_statistic.field_project_project__negative_difference_net
@@ -312,6 +420,10 @@ msgstr "Gesamte Projektverluste als positive Zahl, NETTO-Basis (Verluste Netto).
 msgid "Current P&L (Calculated)"
 msgstr "Aktuelle G&V (Berechnet)"
 
+#. module: project_statistic
+#: view string
+msgid "Current P&L (Calc.)"
+msgstr "Aktuelle G&V (Ber.)"
 
 #. module: project_statistic
 #: model:ir.model.fields,help:project_statistic.field_project_project__current_calculated_profit_loss
@@ -818,11 +930,35 @@ msgstr "NETTO-Beträge: Hauptbeträge für Gewinnberechnung (ohne MwSt.)"
 msgid "GROSS Amounts (dark gray): Total amounts for cash flow analysis (with VAT)"
 msgstr "BRUTTO-Beträge (dunkelgrau): Gesamtbeträge für Cashflow-Analyse (mit MwSt.)"
 
+#. module: project_statistic
+#: wizard
+msgid "General Hourly Rate (EUR)"
+msgstr "Allgemeiner Stundensatz (EUR)"
 
+#. module: project_statistic
+#: wizard
+msgid "General hourly rate used to calculate adjusted labor costs. Formula: total_hours_booked_adjusted * general_hourly_rate = labor_costs_adjusted"
+msgstr "Allgemeiner Stundensatz zur Berechnung der angepassten Personalkosten. Formel: gebuchte_stunden_angepasst × allgemeiner_stundensatz = personalkosten_angepasst"
 
+#. module: project_statistic
+#: wizard
+msgid "Vendor Bill Surcharge Factor"
+msgstr "Aufschlagsfaktor Eingangsrechnungen"
 
+#. module: project_statistic
+#: wizard
+msgid "Surcharge factor applied to vendor bills. Formula: vendor_bills_total_net * factor = adjusted_vendor_bill_amount. Example: 1.30 = 30% surcharge"
+msgstr "Aufschlagsfaktor für Eingangsrechnungen. Formel: eingangsrechnungen_netto × faktor = angepasste_eingangsrechnungen. Beispiel: 1,30 = 30% Aufschlag"
 
+#. module: project_statistic
+#: wizard
+msgid "Refresh Data"
+msgstr "Daten aktualisieren"
 
+#. module: project_statistic
+#: wizard
+msgid "Cancel"
+msgstr "Abbrechen"
 
 #. module: project_statistic
 #: code:addons/project_statistic/wizard/refresh_financial_data_wizard.py
@@ -859,34 +995,150 @@ msgstr "Finanzdaten wurden für %s Projekt(e) neu berechnet."
 msgid "Hours (Industrial)"
 msgstr "Stunden (Industriemin.)"
 
+#. module: project_statistic
+#: sum label
+msgid "Total Sales Orders (NET)"
+msgstr "Aufträge gesamt (NETTO)"
 
+#. module: project_statistic
+#: sum label
+msgid "Total Invoiced (Net)"
+msgstr "Fakturiert gesamt (Netto)"
 
+#. module: project_statistic
+#: sum label
+msgid "Total Outgoing Invoices"
+msgstr "Ausgangsrechnungen gesamt"
 
+#. module: project_statistic
+#: sum label
+msgid "Total Credit Notes"
+msgstr "Gutschriften gesamt"
 
+#. module: project_statistic
+#: sum label
+msgid "Total Paid (Net)"
+msgstr "Bezahlt gesamt (Netto)"
 
+#. module: project_statistic
+#: sum label
+msgid "Total Outstanding (Net)"
+msgstr "Offen gesamt (Netto)"
 
+#. module: project_statistic
+#: sum label
+msgid "Total Invoiced (Gross)"
+msgstr "Fakturiert gesamt (Brutto)"
 
+#. module: project_statistic
+#: sum label
+msgid "Total Paid (Gross)"
+msgstr "Bezahlt gesamt (Brutto)"
 
+#. module: project_statistic
+#: sum label
+msgid "Total Outstanding (Gross)"
+msgstr "Offen gesamt (Brutto)"
 
+#. module: project_statistic
+#: sum label
+msgid "Total Cash Discounts Granted"
+msgstr "Gewährte Skonti gesamt"
 
+#. module: project_statistic
+#: sum label
+msgid "Total Vendor Bills (Net)"
+msgstr "Eingangsrechnungen gesamt (Netto)"
 
+#. module: project_statistic
+#: sum label
+msgid "Total Incoming Bills"
+msgstr "Eingangsrechnungen gesamt"
 
+#. module: project_statistic
+#: sum label
+msgid "Total Vendor Credit Notes"
+msgstr "Lieferantengutschriften gesamt"
 
+#. module: project_statistic
+#: sum label
+msgid "Total Vendor Bills (Gross)"
+msgstr "Eingangsrechnungen gesamt (Brutto)"
 
+#. module: project_statistic
+#: sum label
+msgid "Total Cash Discounts Received"
+msgstr "Erhaltene Skonti gesamt"
 
+#. module: project_statistic
+#: sum label
+msgid "Total Adjusted Vendor Bills"
+msgstr "Angepasste Eingangsrechnungen gesamt"
 
+#. module: project_statistic
+#: sum label
+msgid "Total Hours"
+msgstr "Stunden gesamt"
 
+#. module: project_statistic
+#: sum label
+msgid "Total Labor Costs"
+msgstr "Personalkosten gesamt"
 
+#. module: project_statistic
+#: sum label
+msgid "Total Hours (Adjusted)"
+msgstr "Stunden gesamt (Angepasst)"
 
+#. module: project_statistic
+#: sum label
+msgid "Labor Costs (Adjusted)"
+msgstr "Personalkosten (Angepasst)"
 
+#. module: project_statistic
+#: sum label
+msgid "Other Costs (Net)"
+msgstr "Sonstige Kosten (Netto)"
 
+#. module: project_statistic
+#: sum label
+msgid "Total Costs Net"
+msgstr "Gesamtkosten Netto"
 
+#. module: project_statistic
+#: sum label
+msgid "Total Profit/Loss (Net)"
+msgstr "Gewinn/Verlust gesamt (Netto)"
 
+#. module: project_statistic
+#: sum label
+msgid "Total Current P&L (Calculated)"
+msgstr "Aktuelle G&V gesamt (Berechnet)"
 
+#. module: project_statistic
+#: sum label
+msgid "Total Losses (Net)"
+msgstr "Verluste gesamt (Netto)"
 
+#. module: project_statistic
+#: sum label
+msgid "Total Quantity"
+msgstr "Menge gesamt"
 
+#. module: project_statistic
+#: sum label
+msgid "Total Amount (Net)"
+msgstr "Betrag gesamt (Netto)"
 
+#. module: project_statistic
+#: pivot view string
+msgid "Project Statistics Pivot"
+msgstr "Projekt Statistiken Pivot"
 
+#. module: project_statistic
+#: graph view string
+msgid "Project Statistics Chart"
+msgstr "Projekt Statistiken Diagramm"
 
 #. module: project_statistic
 #: view:refresh.financial.data.wizard
