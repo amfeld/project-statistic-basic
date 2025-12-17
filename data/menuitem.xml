@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menu item loaded after views to ensure action is available -->
+    <data noupdate="0">
+        <!--
+            Single menu entry in Accounting > Reports > Project Statistic
+            This consolidates all previous menu locations to one canonical place.
+            Access: Account Manager and Account Readonly groups
+        -->
+        <menuitem id="menu_project_analytics_accounting"
+                  name="Project Statistic"
+                  parent="account.menu_finance_reports"
+                  action="action_project_analytics_report"
+                  sequence="50"
+                  groups="account.group_account_manager,account.group_account_readonly"/>
+    </data>
+</odoo>

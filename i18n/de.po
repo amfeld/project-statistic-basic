@@ -1,0 +1,1161 @@
+# German translation for Project Statistic module
+# Odoo 18 Enterprise
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: project_statistic 18.0.1.2.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-17 10:00:00\n"
+"PO-Revision-Date: 2025-12-17 10:00:00\n"
+"Last-Translator: Alex Feld\n"
+"Language-Team: German\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: project_statistic
+#: model:ir.ui.menu,name:project_statistic.menu_project_analytics_accounting
+msgid "Project Statistic"
+msgstr "Projekt Statistik"
+
+#. module: project_statistic
+#: model:ir.actions.act_window,name:project_statistic.action_project_analytics_report
+msgid "Project Statistics"
+msgstr "Projekt Statistiken"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_list_account_analytics
+msgid "Refresh Financial Data"
+msgstr "Finanzdaten aktualisieren"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_list_account_analytics
+msgid "Recalculate financial data with configurable hourly rate"
+msgstr "Finanzdaten mit konfigurierbarem Stundensatz neu berechnen"
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__client_name
+msgid "Client"
+msgstr "Kunde"
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__display_name
+msgid "Project"
+msgstr "Projekt"
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__head_of_project
+msgid "Head of Project"
+msgstr "Projektleiter"
+
+#. module: project_statistic
+#: view string
+msgid "Project Manager"
+msgstr "Projektleiter"
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__analytic_status_display
+msgid "Analytic Status"
+msgstr "Analytik Status"
+
+#. module: project_statistic
+#: selection:project.project,analytic_status_display
+msgid "Has Account"
+msgstr "Hat Konto"
+
+#. module: project_statistic
+#: selection:project.project,analytic_status_display
+msgid "No Account"
+msgstr "Kein Konto"
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__has_analytic_account
+msgid "Has Analytic Account"
+msgstr "Hat Analytik-Konto"
+
+#. module: project_statistic
+#: model:ir.model.fields,help:project_statistic.field_project_project__has_analytic_account
+msgid "Indicates whether this project has a valid analytic account for financial tracking. If False, no financial data can be calculated."
+msgstr "Gibt an, ob dieses Projekt ein gültiges Analytik-Konto für die Finanzverfolgung hat. Wenn nicht, können keine Finanzdaten berechnet werden."
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__sale_order_amount_net
+msgid "Sales Orders (NET)"
+msgstr "Aufträge (NETTO)"
+
+#. module: project_statistic
+#: model:ir.model.fields,help:project_statistic.field_project_project__sale_order_amount_net
+msgid "Total amount (NET) of all confirmed sales orders linked to this project. Only includes orders in 'sale' or 'done' state. If no sales orders are linked, uses manual_sales_order_amount_net as fallback."
+msgstr "Gesamtbetrag (NETTO) aller bestätigten Aufträge, die mit diesem Projekt verknüpft sind. Enthält nur Aufträge im Status 'Verkauf' oder 'Erledigt'. Falls keine Aufträge verknüpft sind, wird der manuelle Fallback-Wert verwendet."
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__has_sales_orders
+msgid "Has Sales Orders"
+msgstr "Hat Aufträge"
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__sale_order_tax_names
+msgid "SO Tax Codes"
+msgstr "Auftrag Steuercodes"
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__manual_sales_order_amount_net
+msgid "Manual Sales Order Amount (NET)"
+msgstr "Manueller Auftragswert (NETTO)"
+
+#. module: project_statistic
+#: view string
+msgid "Expected Revenue (NET)"
+msgstr "Erwarteter Umsatz (NETTO)"
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__customer_invoiced_amount_net
+msgid "Invoiced Amount (Net)"
+msgstr "Rechnungsbetrag (Netto)"
+
+#. module: project_statistic
+#: view string
+msgid "Invoiced (NET)"
+msgstr "Fakturiert (NETTO)"
+
+#. module: project_statistic
+#: model:ir.model.fields,help:project_statistic.field_project_project__customer_invoiced_amount_net
+msgid "Net amount invoiced to customers (without VAT/tax). This is the base amount before taxes are added. Uses price_subtotal from invoice lines."
+msgstr "Nettobetrag der Kundenrechnungen (ohne MwSt.). Dies ist der Basisbetrag vor Steuern. Verwendet price_subtotal der Rechnungszeilen."
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__customer_invoices_net
+msgid "Customer Invoices (NET)"
+msgstr "Kundenrechnungen (NETTO)"
+
+#. module: project_statistic
+#: view string
+msgid "Out. Invoices"
+msgstr "Ausg. Rechnungen"
+
+#. module: project_statistic
+#: view string
+msgid "Outgoing Invoices"
+msgstr "Ausgangsrechnungen"
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__customer_credit_notes_net
+msgid "Customer Credit Notes (NET)"
+msgstr "Kundengutschriften (NETTO)"
+
+#. module: project_statistic
+#: view string
+msgid "Credit Notes"
+msgstr "Gutschriften"
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__customer_paid_amount_net
+msgid "Paid Amount (Net)"
+msgstr "Bezahlter Betrag (Netto)"
+
+#. module: project_statistic
+#: view string
+msgid "Paid (NET)"
+msgstr "Bezahlt (NETTO)"
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__customer_outstanding_amount_net
+msgid "Outstanding Amount (Net)"
+msgstr "Offener Betrag (Netto)"
+
+#. module: project_statistic
+#: view string
+msgid "Outstanding (NET)"
+msgstr "Offen (NETTO)"
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__customer_invoiced_amount_gross
+msgid "Invoiced Amount (Gross)"
+msgstr "Rechnungsbetrag (Brutto)"
+
+#. module: project_statistic
+#: view string
+msgid "Invoiced (GROSS)"
+msgstr "Fakturiert (BRUTTO)"
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__customer_paid_amount_gross
+msgid "Paid Amount (Gross)"
+msgstr "Bezahlter Betrag (Brutto)"
+
+#. module: project_statistic
+#: view string
+msgid "Paid (GROSS)"
+msgstr "Bezahlt (BRUTTO)"
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__customer_outstanding_amount_gross
+msgid "Outstanding Amount (Gross)"
+msgstr "Offener Betrag (Brutto)"
+
+#. module: project_statistic
+#: view string
+msgid "Outstanding (GROSS)"
+msgstr "Offen (BRUTTO)"
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__customer_skonto_taken
+msgid "Customer Cash Discounts (Skonto)"
+msgstr "Gewährte Skonti"
+
+#. module: project_statistic
+#: view string
+msgid "Discounts Granted"
+msgstr "Gewährte Skonti"
+
+#. module: project_statistic
+#: model:ir.model.fields,help:project_statistic.field_project_project__customer_skonto_taken
+msgid "Cash discounts granted to customers for early payment (Gewährte Skonti). This reduces project revenue. Calculated from expense accounts 7300-7303 and liability account 2130."
+msgstr "Skonti, die Kunden für frühzeitige Zahlung gewährt wurden (Gewährte Skonti). Dies reduziert den Projektumsatz. Berechnet aus Aufwandskonten 7300-7303 und Verbindlichkeitskonto 2130."
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__vendor_bills_total_net
+msgid "Vendor Bills (Net)"
+msgstr "Eingangsrechnungen (Netto)"
+
+#. module: project_statistic
+#: view string
+msgid "Vendor Bills (NET)"
+msgstr "Eingangsrechnungen (NETTO)"
+
+#. module: project_statistic
+#: model:ir.model.fields,help:project_statistic.field_project_project__vendor_bills_total_net
+msgid "Net amount of vendor bills (without VAT/tax). This is the base cost before taxes. Uses price_subtotal from bill lines."
+msgstr "Nettobetrag der Lieferantenrechnungen (ohne MwSt.). Dies sind die Basiskosten vor Steuern. Verwendet price_subtotal der Rechnungszeilen."
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__vendor_bills_net
+msgid "Vendor Bills (NET)"
+msgstr "Lieferantenrechnungen (NETTO)"
+
+#. module: project_statistic
+#: view string
+msgid "Inc. Bills"
+msgstr "Eingangsrech."
+
+#. module: project_statistic
+#: view string
+msgid "Incoming Bills"
+msgstr "Eingangsrechnungen"
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__vendor_credit_notes_net
+msgid "Vendor Credit Notes (NET)"
+msgstr "Lieferantengutschriften (NETTO)"
+
+#. module: project_statistic
+#: view string
+msgid "Vendor Cr. Notes"
+msgstr "Lieferantengutschr."
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__vendor_bills_total_gross
+msgid "Vendor Bills (Gross)"
+msgstr "Eingangsrechnungen (Brutto)"
+
+#. module: project_statistic
+#: view string
+msgid "Vendor Bills (GROSS)"
+msgstr "Eingangsrechnungen (BRUTTO)"
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__vendor_skonto_received
+msgid "Vendor Cash Discounts Received"
+msgstr "Erhaltene Skonti"
+
+#. module: project_statistic
+#: view string
+msgid "Discounts Received"
+msgstr "Erhaltene Skonti"
+
+#. module: project_statistic
+#: model:ir.model.fields,help:project_statistic.field_project_project__vendor_skonto_received
+msgid "Cash discounts received from vendors for early payment (Erhaltene Skonti). This reduces project costs and increases profit. Calculated from income accounts 4730-4733 and asset account 2670."
+msgstr "Skonti von Lieferanten für frühzeitige Zahlung (Erhaltene Skonti). Dies reduziert die Projektkosten und erhöht den Gewinn. Berechnet aus Ertragskonten 4730-4733 und Anlagenkonto 2670."
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__adjusted_vendor_bill_amount
+msgid "Adjusted Vendor Bills"
+msgstr "Angepasste Eingangsrechnungen"
+
+#. module: project_statistic
+#: view string
+msgid "Adj. Vendor Bills"
+msgstr "Ang. Eingangsrech."
+
+#. module: project_statistic
+#: model:ir.model.fields,help:project_statistic.field_project_project__adjusted_vendor_bill_amount
+msgid "Vendor bills with surcharge factor applied. Formula: Vendor Bills (NET) × Surcharge Factor. Default surcharge factor is 1.30 (30% markup). Used in profit/loss calculations."
+msgstr "Eingangsrechnungen mit angewendetem Aufschlagsfaktor. Formel: Eingangsrechnungen (NETTO) × Aufschlagsfaktor. Standard-Aufschlagsfaktor ist 1,30 (30% Aufschlag). Wird in Gewinn-/Verlustberechnungen verwendet."
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__total_hours_booked
+msgid "Total Hours Booked"
+msgstr "Gebuchte Stunden"
+
+#. module: project_statistic
+#: view string
+msgid "Hours Booked"
+msgstr "Gebuchte Stunden"
+
+#. module: project_statistic
+#: model:ir.model.fields,help:project_statistic.field_project_project__total_hours_booked
+msgid "Total hours logged in timesheets for this project (Gebuchte Stunden). This includes all timesheet entries from employees working on this project. Used to track resource utilization and calculate labor costs."
+msgstr "Gesamtstunden aus Zeiterfassung für dieses Projekt (Gebuchte Stunden). Enthält alle Zeiterfassungseinträge von Mitarbeitern. Wird zur Verfolgung der Ressourcenauslastung und Berechnung der Arbeitskosten verwendet."
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__labor_costs
+msgid "Labor Costs"
+msgstr "Personalkosten"
+
+#. module: project_statistic
+#: model:ir.model.fields,help:project_statistic.field_project_project__labor_costs
+msgid "Total cost of labor based on timesheets (Personalkosten). Calculated from timesheet entries multiplied by employee hourly rates. This is a major component of internal project costs. NET amount (no VAT on internal labor)."
+msgstr "Gesamtkosten der Arbeit basierend auf Zeiterfassung (Personalkosten). Berechnet aus Zeiterfassungseinträgen multipliziert mit Mitarbeiter-Stundensätzen. Dies ist ein Hauptbestandteil der internen Projektkosten. NETTO-Betrag (keine MwSt. auf interne Arbeit)."
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__total_hours_booked_adjusted
+msgid "Total Hours Booked (Adjusted)"
+msgstr "Gebuchte Stunden (Angepasst)"
+
+#. module: project_statistic
+#: view string
+msgid "Hours (Adjusted)"
+msgstr "Stunden (Ang.)"
+
+#. module: project_statistic
+#: view string
+msgid "Hours Booked (Adjusted)"
+msgstr "Gebuchte Stunden (Angepasst)"
+
+#. module: project_statistic
+#: model:ir.model.fields,help:project_statistic.field_project_project__total_hours_booked_adjusted
+msgid "Adjusted total hours based on employee HFC (Hourly Forecast Correction) factors. Formula: sum(hours * employee.faktor_hfc). This provides a more accurate forecast of actual work effort by adjusting for employee efficiency factors."
+msgstr "Angepasste Gesamtstunden basierend auf Mitarbeiter-HFC-Faktoren (Stunden-Prognosekorrekturfaktoren). Formel: Summe(Stunden × Mitarbeiter.faktor_hfc). Dies ermöglicht eine genauere Prognose des tatsächlichen Arbeitsaufwands durch Anpassung der Mitarbeitereffizienzfaktoren."
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__labor_costs_adjusted
+msgid "Labor Costs (Adjusted)"
+msgstr "Personalkosten (Angepasst)"
+
+#. module: project_statistic
+#: view string
+msgid "Labor Costs (Adj.)"
+msgstr "Personalkosten (Ang.)"
+
+#. module: project_statistic
+#: model:ir.model.fields,help:project_statistic.field_project_project__labor_costs_adjusted
+msgid "Adjusted labor costs calculated using general hourly rate from system parameters. Formula: total_hours_booked_adjusted * general_hourly_rate. Default rate is 66 EUR per hour. This provides standardized cost calculation across all employees."
+msgstr "Angepasste Arbeitskosten, berechnet mit dem allgemeinen Stundensatz aus Systemparametern. Formel: gebuchte_stunden_angepasst × allgemeiner_stundensatz. Standardsatz ist 66 EUR pro Stunde. Dies ermöglicht eine standardisierte Kostenberechnung für alle Mitarbeiter."
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__other_costs_net
+msgid "Other Costs (Net)"
+msgstr "Sonstige Kosten (Netto)"
+
+#. module: project_statistic
+#: view string
+msgid "Other Costs"
+msgstr "Sonstige Kosten"
+
+#. module: project_statistic
+#: model:ir.model.fields,help:project_statistic.field_project_project__other_costs_net
+msgid "Other internal costs excluding labor and vendor bills (net amount without VAT). These are miscellaneous project expenses tracked via analytic lines."
+msgstr "Sonstige interne Kosten ohne Personal- und Eingangsrechnungen (Nettobetrag ohne MwSt.). Dies sind verschiedene Projektausgaben, die über Analytik-Zeilen erfasst werden."
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__total_costs_net
+msgid "Total Costs (Net)"
+msgstr "Gesamtkosten (Netto)"
+
+#. module: project_statistic
+#: view string
+msgid "Total Costs (NET)"
+msgstr "Gesamtkosten (NETTO)"
+
+#. module: project_statistic
+#: model:ir.model.fields,help:project_statistic.field_project_project__total_costs_net
+msgid "Total internal project costs without tax (Nettokosten). Calculated as: Labor Costs + Other Costs (Net). Vendor bills are tracked separately. All amounts are NET (without VAT)."
+msgstr "Gesamte interne Projektkosten ohne Steuern (Nettokosten). Berechnet als: Personalkosten + Sonstige Kosten (Netto). Eingangsrechnungen werden separat erfasst. Alle Beträge sind NETTO (ohne MwSt.)."
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__profit_loss_net
+msgid "Profit/Loss (Net)"
+msgstr "Gewinn/Verlust (Netto)"
+
+#. module: project_statistic
+#: view string
+msgid "Profit/Loss (NET)"
+msgstr "Gewinn/Verlust (NETTO)"
+
+#. module: project_statistic
+#: model:ir.model.fields,help:project_statistic.field_project_project__profit_loss_net
+msgid "Project profitability based on NET amounts (Gewinn/Verlust Netto). Formula: (Invoiced Net - Customer Skonto) - (Vendor Bills Net - Vendor Skonto + Total Costs Net). Consistent NET-to-NET calculation for accurate accounting. A positive value indicates profit, negative indicates loss."
+msgstr "Projektrentabilität basierend auf NETTO-Beträgen (Gewinn/Verlust Netto). Formel: (Fakturiert Netto - Gewährte Skonti) - (Eingangsrechnungen Netto - Erhaltene Skonti + Gesamtkosten Netto). Konsistente NETTO-zu-NETTO-Berechnung für korrekte Buchhaltung. Ein positiver Wert zeigt Gewinn, ein negativer Verlust."
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__negative_difference_net
+msgid "Losses (Net)"
+msgstr "Verluste (Netto)"
+
+#. module: project_statistic
+#: view string
+msgid "Losses"
+msgstr "Verluste"
+
+#. module: project_statistic
+#: model:ir.model.fields,help:project_statistic.field_project_project__negative_difference_net
+msgid "Total project losses as a positive number, NET basis (Verluste Netto). This shows the absolute value of negative profit/loss. If profit/loss is positive, this field is 0. Useful for tracking and reporting total losses."
+msgstr "Gesamte Projektverluste als positive Zahl, NETTO-Basis (Verluste Netto). Zeigt den absoluten Wert des negativen Gewinn/Verlusts. Wenn Gewinn/Verlust positiv ist, ist dieses Feld 0. Nützlich für die Verfolgung und Berichterstattung von Gesamtverlusten."
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_project_project__current_calculated_profit_loss
+msgid "Current P&L (Calculated)"
+msgstr "Aktuelle G&V (Berechnet)"
+
+#. module: project_statistic
+#: view string
+msgid "Current P&L (Calc.)"
+msgstr "Aktuelle G&V (Ber.)"
+
+#. module: project_statistic
+#: model:ir.model.fields,help:project_statistic.field_project_project__current_calculated_profit_loss
+msgid "Current calculated profit/loss using adjusted cost components. Formula: Total Invoiced - Adjusted Vendor Bills - Adjusted Labor Costs - Adjusted Other Costs. This provides real-time profitability including cost adjustments."
+msgstr "Aktueller berechneter Gewinn/Verlust mit angepassten Kostenkomponenten. Formel: Gesamt fakturiert - Angepasste Eingangsrechnungen - Angepasste Personalkosten - Angepasste sonstige Kosten. Dies bietet Echtzeit-Rentabilität einschließlich Kostenanpassungen."
+
+#. module: project_statistic
+#: model:ir.model.fields,field_description:project_statistic.field_hr_employee__faktor_hfc
+msgid "Faktor HFC"
+msgstr "Faktor HFC"
+
+#. module: project_statistic
+#: model:ir.model.fields,help:project_statistic.field_hr_employee__faktor_hfc
+msgid "Hourly Forecast Correction Factor. This factor is used to adjust the booked hours for this employee. Default is 1.0 (no adjustment). A value of 1.2 means 20% more hours are counted."
+msgstr "Stunden-Prognosekorrekturfaktor. Dieser Faktor wird verwendet, um die gebuchten Stunden für diesen Mitarbeiter anzupassen. Standard ist 1,0 (keine Anpassung). Ein Wert von 1,2 bedeutet, dass 20% mehr Stunden gezählt werden."
+
+#. module: project_statistic
+#: view:hr.employee:project_statistic.view_employee_form_inherit_faktor_hfc
+msgid "Project Analytics"
+msgstr "Projekt-Analytik"
+
+#. module: project_statistic
+#: view:hr.employee:project_statistic.view_employee_form_inherit_faktor_hfc
+msgid "Hourly Forecast Correction Factor used to adjust booked hours for this employee. Default is 1.0 (no adjustment)."
+msgstr "Stunden-Prognosekorrekturfaktor zur Anpassung der gebuchten Stunden für diesen Mitarbeiter. Standard ist 1,0 (keine Anpassung)."
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Project Financial Analysis"
+msgstr "Projekt-Finanzanalyse"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Analytic Entries"
+msgstr "Analytik-Buchungen"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Show all analytic entries assigned to this project"
+msgstr "Alle diesem Projekt zugeordneten Analytik-Buchungen anzeigen"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Project Details"
+msgstr "Projektdetails"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Open the standard project view"
+msgstr "Standard-Projektansicht öffnen"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Recalculate financial data for this project"
+msgstr "Finanzdaten für dieses Projekt neu berechnen"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "No Financial Data Available"
+msgstr "Keine Finanzdaten verfügbar"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "This project has no analytic account assigned. All financial fields show 0.00."
+msgstr "Dieses Projekt hat kein Analytik-Konto zugewiesen. Alle Finanzfelder zeigen 0,00."
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "To activate financial data:"
+msgstr "Zur Aktivierung der Finanzdaten:"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Enable \"Analytic Accounting\" in accounting settings"
+msgstr "\"Analytische Buchhaltung\" in den Buchhaltungseinstellungen aktivieren"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Assign an analytic account to this project (Plan: Projects)"
+msgstr "Diesem Projekt ein Analytik-Konto zuweisen (Plan: Projekte)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Ensure invoice lines have \"Analytic Distribution\" set"
+msgstr "Sicherstellen, dass Rechnungszeilen \"Analytische Verteilung\" eingestellt haben"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Financial Overview"
+msgstr "Finanzübersicht"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Revenue (NET)"
+msgstr "Umsatz (NETTO)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Costs (NET)"
+msgstr "Kosten (NETTO)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Profitability"
+msgstr "Rentabilität"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Outgoing Invoices (with Payments)"
+msgstr "Ausgangsrechnungen (mit Zahlungen)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Sales Orders (Reference)"
+msgstr "Aufträge (Referenz)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Fallback Value"
+msgstr "Fallback-Wert"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "No linked sales orders found. Showing manual fallback value."
+msgstr "Keine verknüpften Aufträge gefunden. Manueller Fallback-Wert wird angezeigt."
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Used when no sales orders are linked"
+msgstr "Wird verwendet, wenn keine Aufträge verknüpft sind"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Outgoing Invoices Breakdown (NET)"
+msgstr "Aufschlüsselung Ausgangsrechnungen (NETTO)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Invoice Amounts"
+msgstr "Rechnungsbeträge"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Payment Status"
+msgstr "Zahlungsstatus"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Total Invoiced (NET)"
+msgstr "Gesamt fakturiert (NETTO)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Cash Discounts Granted"
+msgstr "Gewährte Skonti"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "GROSS Reference (with VAT)"
+msgstr "BRUTTO-Referenz (mit MwSt.)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Total Invoiced (GROSS)"
+msgstr "Gesamt fakturiert (BRUTTO)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Info:"
+msgstr "Info:"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Credit notes are shown as negative amounts and reduce the total. NET amounts are used for profit calculations. GROSS amounts show total including VAT for cash flow reference."
+msgstr "Gutschriften werden als negative Beträge angezeigt und reduzieren die Summe. NETTO-Beträge werden für Gewinnberechnungen verwendet. BRUTTO-Beträge zeigen die Gesamtsumme einschließlich MwSt. für Cashflow-Referenz."
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Incoming Invoices"
+msgstr "Eingangsrechnungen"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Incoming Invoices Breakdown (NET)"
+msgstr "Aufschlüsselung Eingangsrechnungen (NETTO)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Total Vendor Bills (NET)"
+msgstr "Gesamt Eingangsrechnungen (NETTO)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Cash Discounts Received"
+msgstr "Erhaltene Skonti"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Adjusted Costs"
+msgstr "Angepasste Kosten"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Adjusted Bills (with surcharge)"
+msgstr "Angepasste Rechnungen (mit Aufschlag)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Surcharge factor: default 1.30 (30% markup)"
+msgstr "Aufschlagsfaktor: Standard 1,30 (30% Aufschlag)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Total Bills (GROSS)"
+msgstr "Gesamt Rechnungen (BRUTTO)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Credit notes received from vendors are shown as negative amounts and reduce costs. NET amounts are used for profit calculations. The adjusted vendor bills include a configurable surcharge factor."
+msgstr "Von Lieferanten erhaltene Gutschriften werden als negative Beträge angezeigt und reduzieren die Kosten. NETTO-Beträge werden für Gewinnberechnungen verwendet. Die angepassten Eingangsrechnungen enthalten einen konfigurierbaren Aufschlagsfaktor."
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Labor & Internal Costs"
+msgstr "Personal- & interne Kosten"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Time Tracking (Industrial Minutes)"
+msgstr "Zeiterfassung (Industrieminuten)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Total Hours Booked"
+msgstr "Gebuchte Stunden gesamt"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Labor Costs (Original)"
+msgstr "Personalkosten (Original)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Adjusted Calculations (with HFC Factor)"
+msgstr "Angepasste Berechnungen (mit HFC-Faktor)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Total Hours (Adjusted)"
+msgstr "Stunden gesamt (Angepasst)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Other Internal Costs"
+msgstr "Sonstige interne Kosten"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Total Internal Costs"
+msgstr "Interne Kosten gesamt"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Adjusted Calculations:"
+msgstr "Angepasste Berechnungen:"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Total Hours (Adjusted): Sum of (timesheet hours x employee HFC factor)"
+msgstr "Stunden gesamt (Angepasst): Summe aus (Zeiterfassungsstunden × Mitarbeiter-HFC-Faktor)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Labor Costs (Adjusted): Total Hours Adjusted x General Hourly Rate (66 EUR)"
+msgstr "Personalkosten (Angepasst): Angepasste Stunden × Allgemeiner Stundensatz (66 EUR)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "This provides standardized cost calculation across all employees"
+msgstr "Dies ermöglicht eine standardisierte Kostenberechnung für alle Mitarbeiter"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Profitability Analysis"
+msgstr "Rentabilitätsanalyse"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Profit/Loss Calculation (NET Basis)"
+msgstr "Gewinn/Verlust-Berechnung (NETTO-Basis)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Revenue (Invoiced NET)"
+msgstr "Umsatz (Fakturiert NETTO)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "- Cash Discounts Granted"
+msgstr "- Gewährte Skonti"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Costs"
+msgstr "Kosten"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "+ Vendor Bills NET"
+msgstr "+ Eingangsrechnungen NETTO"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "- Vendor Discounts Received"
+msgstr "- Erhaltene Skonti"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "+ Internal Costs NET"
+msgstr "+ Interne Kosten NETTO"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "= Profit/Loss (NET)"
+msgstr "= Gewinn/Verlust (NETTO)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Current Calculated P&L (Adjusted)"
+msgstr "Aktuell berechnete G&V (Angepasst)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Total Invoiced"
+msgstr "Gesamt fakturiert"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Adjusted Costs"
+msgstr "Angepasste Kosten"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "- Adjusted Vendor Bills"
+msgstr "- Angepasste Eingangsrechnungen"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "- Adjusted Labor Costs"
+msgstr "- Angepasste Personalkosten"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "- Other Costs"
+msgstr "- Sonstige Kosten"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "= Current P&L (Calculated)"
+msgstr "= Aktuelle G&V (Berechnet)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Additional Metrics"
+msgstr "Zusätzliche Kennzahlen"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Total Losses (if negative)"
+msgstr "Gesamtverluste (wenn negativ)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "GROSS Reference (incl. VAT)"
+msgstr "BRUTTO-Referenz (inkl. MwSt.)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Revenue (Invoiced GROSS)"
+msgstr "Umsatz (Fakturiert BRUTTO)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Vendor Bills GROSS"
+msgstr "Eingangsrechnungen BRUTTO"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Calculation Formula:"
+msgstr "Berechnungsformel:"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Why NET Basis?"
+msgstr "Warum NETTO-Basis?"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "VAT is a pass-through (we collect and remit to tax authority)"
+msgstr "MwSt. ist ein Durchlaufposten (wir erheben und führen an die Steuerbehörde ab)"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "NET-to-NET comparison is accounting-correct"
+msgstr "NETTO-zu-NETTO-Vergleich ist buchhaltungskorrekt"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Shows true profitability without tax distortion"
+msgstr "Zeigt echte Rentabilität ohne Steuerverzerrung"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Project Details"
+msgstr "Projektdetails"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Project Information"
+msgstr "Projektinformationen"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Customer"
+msgstr "Kunde"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Stage"
+msgstr "Phase"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Dates"
+msgstr "Termine"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Start Date"
+msgstr "Startdatum"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "End Date"
+msgstr "Enddatum"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Created"
+msgstr "Erstellt"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Analytic Accounting"
+msgstr "Analytische Buchhaltung"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Analytic Account"
+msgstr "Analytik-Konto"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_account_analytics
+msgid "Status"
+msgstr "Status"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_inherit_analytics_button
+msgid "Financial Analysis"
+msgstr "Finanzanalyse"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_inherit_analytics_button
+msgid "Show detailed financial analysis with NET/GROSS comparison"
+msgstr "Detaillierte Finanzanalyse mit NETTO/BRUTTO-Vergleich anzeigen"
+
+#. module: project_statistic
+#: view:project.project:project_statistic.view_project_form_inherit_analytics_button
+msgid "Financial Data"
+msgstr "Finanzdaten"
+
+#. module: project_statistic
+#: model:ir.actions.act_window,help:project_statistic.action_project_analytics_report
+msgid "No projects found"
+msgstr "Keine Projekte gefunden"
+
+#. module: project_statistic
+#: model:ir.actions.act_window,help:project_statistic.action_project_analytics_report
+msgid "This view shows all projects for analysis and reporting purposes with detailed customer and vendor tracking."
+msgstr "Diese Ansicht zeigt alle Projekte für Analyse- und Berichtszwecke mit detaillierter Kunden- und Lieferantenverfolgung."
+
+#. module: project_statistic
+#: model:ir.actions.act_window,help:project_statistic.action_project_analytics_report
+msgid "NET vs. GROSS:"
+msgstr "NETTO vs. BRUTTO:"
+
+#. module: project_statistic
+#: model:ir.actions.act_window,help:project_statistic.action_project_analytics_report
+msgid "NET Amounts: Main amounts for profit calculation (without VAT)"
+msgstr "NETTO-Beträge: Hauptbeträge für Gewinnberechnung (ohne MwSt.)"
+
+#. module: project_statistic
+#: model:ir.actions.act_window,help:project_statistic.action_project_analytics_report
+msgid "GROSS Amounts (dark gray): Total amounts for cash flow analysis (with VAT)"
+msgstr "BRUTTO-Beträge (dunkelgrau): Gesamtbeträge für Cashflow-Analyse (mit MwSt.)"
+
+#. module: project_statistic
+#: wizard
+msgid "General Hourly Rate (EUR)"
+msgstr "Allgemeiner Stundensatz (EUR)"
+
+#. module: project_statistic
+#: wizard
+msgid "General hourly rate used to calculate adjusted labor costs. Formula: total_hours_booked_adjusted * general_hourly_rate = labor_costs_adjusted"
+msgstr "Allgemeiner Stundensatz zur Berechnung der angepassten Personalkosten. Formel: gebuchte_stunden_angepasst × allgemeiner_stundensatz = personalkosten_angepasst"
+
+#. module: project_statistic
+#: wizard
+msgid "Vendor Bill Surcharge Factor"
+msgstr "Aufschlagsfaktor Eingangsrechnungen"
+
+#. module: project_statistic
+#: wizard
+msgid "Surcharge factor applied to vendor bills. Formula: vendor_bills_total_net * factor = adjusted_vendor_bill_amount. Example: 1.30 = 30% surcharge"
+msgstr "Aufschlagsfaktor für Eingangsrechnungen. Formel: eingangsrechnungen_netto × faktor = angepasste_eingangsrechnungen. Beispiel: 1,30 = 30% Aufschlag"
+
+#. module: project_statistic
+#: wizard
+msgid "Refresh Data"
+msgstr "Daten aktualisieren"
+
+#. module: project_statistic
+#: wizard
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#. module: project_statistic
+#: code:addons/project_statistic/wizard/refresh_financial_data_wizard.py
+msgid "Financial Data Refreshed"
+msgstr "Finanzdaten aktualisiert"
+
+#. module: project_statistic
+#: code:addons/project_statistic/wizard/refresh_financial_data_wizard.py
+msgid "Financial data has been recalculated for %s project(s) with hourly rate %.2f EUR and vendor bill surcharge factor %.2f."
+msgstr "Finanzdaten wurden für %s Projekt(e) mit Stundensatz %.2f EUR und Aufschlagsfaktor %.2f neu berechnet."
+
+#. module: project_statistic
+#: code:addons/project_statistic/models/project_analytics.py
+msgid "No analytic account found for this project."
+msgstr "Kein Analytik-Konto für dieses Projekt gefunden."
+
+#. module: project_statistic
+#: code:addons/project_statistic/models/project_analytics.py
+msgid "Analytic Entries - %s"
+msgstr "Analytik-Buchungen - %s"
+
+#. module: project_statistic
+#: code:addons/project_statistic/models/project_analytics.py
+msgid "Financial Analysis - %s"
+msgstr "Finanzanalyse - %s"
+
+#. module: project_statistic
+#: code:addons/project_statistic/models/project_analytics.py
+msgid "Financial data has been recalculated for %s project(s)."
+msgstr "Finanzdaten wurden für %s Projekt(e) neu berechnet."
+
+#. module: project_statistic
+#: view:account.analytic.line
+msgid "Hours (Industrial)"
+msgstr "Stunden (Industriemin.)"
+
+#. module: project_statistic
+#: sum label
+msgid "Total Sales Orders (NET)"
+msgstr "Aufträge gesamt (NETTO)"
+
+#. module: project_statistic
+#: sum label
+msgid "Total Invoiced (Net)"
+msgstr "Fakturiert gesamt (Netto)"
+
+#. module: project_statistic
+#: sum label
+msgid "Total Outgoing Invoices"
+msgstr "Ausgangsrechnungen gesamt"
+
+#. module: project_statistic
+#: sum label
+msgid "Total Credit Notes"
+msgstr "Gutschriften gesamt"
+
+#. module: project_statistic
+#: sum label
+msgid "Total Paid (Net)"
+msgstr "Bezahlt gesamt (Netto)"
+
+#. module: project_statistic
+#: sum label
+msgid "Total Outstanding (Net)"
+msgstr "Offen gesamt (Netto)"
+
+#. module: project_statistic
+#: sum label
+msgid "Total Invoiced (Gross)"
+msgstr "Fakturiert gesamt (Brutto)"
+
+#. module: project_statistic
+#: sum label
+msgid "Total Paid (Gross)"
+msgstr "Bezahlt gesamt (Brutto)"
+
+#. module: project_statistic
+#: sum label
+msgid "Total Outstanding (Gross)"
+msgstr "Offen gesamt (Brutto)"
+
+#. module: project_statistic
+#: sum label
+msgid "Total Cash Discounts Granted"
+msgstr "Gewährte Skonti gesamt"
+
+#. module: project_statistic
+#: sum label
+msgid "Total Vendor Bills (Net)"
+msgstr "Eingangsrechnungen gesamt (Netto)"
+
+#. module: project_statistic
+#: sum label
+msgid "Total Incoming Bills"
+msgstr "Eingangsrechnungen gesamt"
+
+#. module: project_statistic
+#: sum label
+msgid "Total Vendor Credit Notes"
+msgstr "Lieferantengutschriften gesamt"
+
+#. module: project_statistic
+#: sum label
+msgid "Total Vendor Bills (Gross)"
+msgstr "Eingangsrechnungen gesamt (Brutto)"
+
+#. module: project_statistic
+#: sum label
+msgid "Total Cash Discounts Received"
+msgstr "Erhaltene Skonti gesamt"
+
+#. module: project_statistic
+#: sum label
+msgid "Total Adjusted Vendor Bills"
+msgstr "Angepasste Eingangsrechnungen gesamt"
+
+#. module: project_statistic
+#: sum label
+msgid "Total Hours"
+msgstr "Stunden gesamt"
+
+#. module: project_statistic
+#: sum label
+msgid "Total Labor Costs"
+msgstr "Personalkosten gesamt"
+
+#. module: project_statistic
+#: sum label
+msgid "Total Hours (Adjusted)"
+msgstr "Stunden gesamt (Angepasst)"
+
+#. module: project_statistic
+#: sum label
+msgid "Labor Costs (Adjusted)"
+msgstr "Personalkosten (Angepasst)"
+
+#. module: project_statistic
+#: sum label
+msgid "Other Costs (Net)"
+msgstr "Sonstige Kosten (Netto)"
+
+#. module: project_statistic
+#: sum label
+msgid "Total Costs Net"
+msgstr "Gesamtkosten Netto"
+
+#. module: project_statistic
+#: sum label
+msgid "Total Profit/Loss (Net)"
+msgstr "Gewinn/Verlust gesamt (Netto)"
+
+#. module: project_statistic
+#: sum label
+msgid "Total Current P&L (Calculated)"
+msgstr "Aktuelle G&V gesamt (Berechnet)"
+
+#. module: project_statistic
+#: sum label
+msgid "Total Losses (Net)"
+msgstr "Verluste gesamt (Netto)"
+
+#. module: project_statistic
+#: sum label
+msgid "Total Quantity"
+msgstr "Menge gesamt"
+
+#. module: project_statistic
+#: sum label
+msgid "Total Amount (Net)"
+msgstr "Betrag gesamt (Netto)"
+
+#. module: project_statistic
+#: pivot view string
+msgid "Project Statistics Pivot"
+msgstr "Projekt Statistiken Pivot"
+
+#. module: project_statistic
+#: graph view string
+msgid "Project Statistics Chart"
+msgstr "Projekt Statistiken Diagramm"
+
+#. module: project_statistic
+#: view:refresh.financial.data.wizard
+msgid "Refresh Financial Data"
+msgstr "Finanzdaten aktualisieren"
+
+#. module: project_statistic
+#: view:refresh.financial.data.wizard
+msgid "These values are applied to ALL projects when calculating:"
+msgstr "Diese Werte werden bei der Berechnung auf ALLE Projekte angewendet:"
+
+#. module: project_statistic
+#: view:refresh.financial.data.wizard
+msgid "Current hourly rate used in calculations"
+msgstr "Aktueller Stundensatz in Berechnungen"
+
+#. module: project_statistic
+#: view:refresh.financial.data.wizard
+msgid "Current surcharge factor applied to vendor bills"
+msgstr "Aktueller Aufschlagsfaktor für Eingangsrechnungen"

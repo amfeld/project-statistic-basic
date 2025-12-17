@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Custom list view for projects in account module -->
+    <record id="view_project_list_account_analytics" model="ir.ui.view">
+        <field name="name">project.project.list.account.analytics</field>
+        <field name="model">project.project</field>
+        <field name="arch" type="xml">
+            <list string="Project Statistics" create="false" edit="false" delete="false" limit="500" default_order="sequence,id">
+                <header>
+                    <button name="%(action_refresh_financial_data_wizard)d" type="action"
+                            string="Refresh Financial Data" class="btn-primary"
+                            help="Recalculate financial data with configurable hourly rate"/>
+                </header>
+
+                <!-- Hidden currency field for monetary widget -->
+                <field name="currency_id" invisible="1" column_invisible="1"/>
+
+                <!-- Sequence for manual drag&drop sorting (handle icon only, not displayed as column) -->
+                <field name="sequence" widget="handle"/>
+
+                <!-- Basic Information -->
+                <field name="client_name" width="200px" string="Client"/>
+                <field name="display_name" width="250px" string="Project"/>
+                <field name="head_of_project" width="150px" string="Project Manager"/>
+
+                <!-- Analytic Account Status -->
+                <field name="analytic_status_display"
+                       widget="badge"
+                       decoration-success="analytic_status_display == 'Has Account'"
+                       decoration-danger="analytic_status_display == 'No Account'"
+                       optional="show" width="120px"/>
+                <field name="has_analytic_account" invisible="1" column_invisible="1"/>
+
+                <!-- Sales Order Fields (confirmed orders) -->
+                <field name="has_sales_orders" column_invisible="1"/>
+                <field name="sale_order_amount_net" sum="Total Sales Orders (NET)" optional="show"
+                       widget="monetary" options="{'currency_field': 'currency_id'}" width="150px" string="Sales Orders (NET)"
+                       decoration-warning="not has_sales_orders"/>
+                <field name="sale_order_tax_names" optional="hide" width="120px" string="SO Tax Codes"/>
+
+                <!-- Customer Invoice Fields - NET (primary) -->
+                <field name="customer_invoiced_amount_net" sum="Total Invoiced (Net)" optional="show"
+                       widget="monetary" options="{'currency_field': 'currency_id'}" decoration-bf="True" width="140px" string="Invoiced (NET)"/>
+
+                <!-- Customer Invoice Breakdown - NET (optional) -->
+                <field name="customer_invoices_net" sum="Total Outgoing Invoices" optional="hide"
+                       widget="monetary" options="{'currency_field': 'currency_id'}" width="140px" string="Out. Invoices"/>
+                <field name="customer_credit_notes_net" sum="Total Credit Notes" optional="hide"
+                       widget="monetary" options="{'currency_field': 'currency_id'}" decoration-danger="customer_credit_notes_net != 0" width="140px" string="Credit Notes"/>
+
+                <field name="customer_paid_amount_net" sum="Total Paid (Net)" optional="show"
+                       widget="monetary" options="{'currency_field': 'currency_id'}" width="140px" string="Paid (NET)"/>
+                <field name="customer_outstanding_amount_net" sum="Total Outstanding (Net)" optional="show"
+                       widget="monetary" options="{'currency_field': 'currency_id'}" decoration-danger="customer_outstanding_amount_net != 0" width="140px"
+                       string="Outstanding (NET)"/>
+
+                <!-- Customer Invoice Fields - GROSS (dunkelgrau) -->
+                <field name="customer_invoiced_amount_gross" sum="Total Invoiced (Gross)" optional="hide"
+                       widget="monetary" options="{'currency_field': 'currency_id'}" class="text-muted" width="140px" string="Invoiced (GROSS)"/>
+                <field name="customer_paid_amount_gross" sum="Total Paid (Gross)" optional="hide"
+                       widget="monetary" options="{'currency_field': 'currency_id'}" class="text-muted" width="140px" string="Paid (GROSS)"/>
+                <field name="customer_outstanding_amount_gross" sum="Total Outstanding (Gross)" optional="hide"
+                       widget="monetary" options="{'currency_field': 'currency_id'}" class="text-muted" width="140px" string="Outstanding (GROSS)"/>
+
+                <!-- Skonto -->
+                <field name="customer_skonto_taken" sum="Total Cash Discounts Granted" optional="hide"
+                       widget="monetary" options="{'currency_field': 'currency_id'}" width="140px" string="Discounts Granted"/>
+
+                <!-- Vendor Bills - NET (primary) -->
+                <field name="vendor_bills_total_net" sum="Total Vendor Bills (Net)" optional="show"
+                       widget="monetary" options="{'currency_field': 'currency_id'}" decoration-bf="True" width="140px" string="Vendor Bills (NET)"/>
+
+                <!-- Vendor Bills Breakdown - NET (optional) -->
+                <field name="vendor_bills_net" sum="Total Incoming Bills" optional="hide"
+                       widget="monetary" options="{'currency_field': 'currency_id'}" width="140px" string="Inc. Bills"/>
+                <field name="vendor_credit_notes_net" sum="Total Vendor Credit Notes" optional="hide"
+                       widget="monetary" options="{'currency_field': 'currency_id'}" decoration-success="vendor_credit_notes_net != 0" width="140px" string="Vendor Cr. Notes"/>
+
+                <!-- Vendor Bills - GROSS (dunkelgrau) -->
+                <field name="vendor_bills_total_gross" sum="Total Vendor Bills (Gross)" optional="hide"
+                       widget="monetary" options="{'currency_field': 'currency_id'}" class="text-muted" width="140px" string="Vendor Bills (GROSS)"/>
+
+                <field name="vendor_skonto_received" sum="Total Cash Discounts Received" optional="hide"
+                       widget="monetary" options="{'currency_field': 'currency_id'}" width="140px" string="Discounts Received"/>
+
+                <!-- Adjusted Vendor Bills (with surcharge factor) -->
+                <field name="adjusted_vendor_bill_amount" sum="Total Adjusted Vendor Bills" optional="hide"
+                       widget="monetary" options="{'currency_field': 'currency_id'}" decoration-bf="True" width="160px" string="Adj. Vendor Bills"/>
+
+                <!-- Labor - Original -->
+                <field name="total_hours_booked" sum="Total Hours" optional="show"
+                       digits="[16, 2]" width="120px" string="Hours Booked"/>
+                <field name="labor_costs" sum="Total Labor Costs" optional="hide"
+                       widget="monetary" options="{'currency_field': 'currency_id'}" width="140px" string="Labor Costs"/>
+
+                <!-- Labor - Adjusted (with HFC Factor) - MAIN COLUMNS -->
+                <field name="total_hours_booked_adjusted" sum="Total Hours (Adjusted)" optional="show"
+                       digits="[16, 2]" decoration-bf="True" width="140px"
+                       string="Hours (Adjusted)"/>
+                <field name="labor_costs_adjusted" sum="Labor Costs (Adjusted)" optional="show"
+                       widget="monetary" options="{'currency_field': 'currency_id'}" decoration-bf="True" width="160px"
+                       string="Labor Costs (Adj.)"/>
+
+                <!-- Other Costs -->
+                <field name="other_costs_net" sum="Other Costs (Net)" optional="hide"
+                       widget="monetary" options="{'currency_field': 'currency_id'}" width="140px" string="Other Costs"/>
+
+                <!-- Total Cost Fields - NET -->
+                <field name="total_costs_net" sum="Total Costs Net" optional="show"
+                       widget="monetary" options="{'currency_field': 'currency_id'}" decoration-bf="True" width="140px" string="Total Costs (NET)"/>
+
+                <!-- Profitability - NET -->
+                <field name="profit_loss_net" sum="Total Profit/Loss (Net)" optional="show"
+                       widget="monetary" options="{'currency_field': 'currency_id'}" decoration-bf="True"
+                       decoration-success="profit_loss_net &gt; 0"
+                       decoration-danger="profit_loss_net &lt; 0" width="140px"
+                       string="Profit/Loss (NET)"/>
+                <field name="current_calculated_profit_loss" sum="Total Current P&amp;L (Calculated)" optional="hide"
+                       widget="monetary" options="{'currency_field': 'currency_id'}" decoration-bf="True"
+                       decoration-success="current_calculated_profit_loss &gt; 0"
+                       decoration-danger="current_calculated_profit_loss &lt; 0" width="160px"
+                       string="Current P&amp;L (Calc.)"/>
+                <field name="negative_difference_net" sum="Total Losses (Net)" optional="hide"
+                       widget="monetary" options="{'currency_field': 'currency_id'}" width="140px" string="Losses"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_project_pivot_account_analytics" model="ir.ui.view">
+        <field name="name">project.project.pivot.account.analytics</field>
+        <field name="model">project.project</field>
+        <field name="arch" type="xml">
+            <pivot string="Project Statistics Pivot">
+                <!-- Customer Invoice Measures - NET (primary) -->
+                <field name="customer_invoiced_amount_net" type="measure"/>
+                <field name="customer_invoices_net" type="measure" string="Outgoing Invoices"/>
+                <field name="customer_credit_notes_net" type="measure" string="Customer Credit Notes"/>
+                <field name="customer_paid_amount_net" type="measure"/>
+                <field name="customer_outstanding_amount_net" type="measure"/>
+
+                <!-- Customer Invoice Measures - GROSS -->
+                <field name="customer_invoiced_amount_gross" type="measure"/>
+                <field name="customer_paid_amount_gross" type="measure"/>
+                <field name="customer_outstanding_amount_gross" type="measure"/>
+
+                <field name="customer_skonto_taken" type="measure"/>
+
+                <!-- Vendor Bill Measures - NET (primary) -->
+                <field name="vendor_bills_total_net" type="measure"/>
+                <field name="vendor_bills_net" type="measure" string="Incoming Bills"/>
+                <field name="vendor_credit_notes_net" type="measure" string="Vendor Credit Notes"/>
+
+                <!-- Vendor Bill Measures - GROSS -->
+                <field name="vendor_bills_total_gross" type="measure"/>
+
+                <field name="vendor_skonto_received" type="measure"/>
+
+                <!-- Labor Measures - Original -->
+                <field name="total_hours_booked" type="measure" string="Hours Booked"/>
+                <field name="labor_costs" type="measure" string="Labor Costs"/>
+
+                <!-- Labor Measures - Adjusted (with HFC Factor) -->
+                <field name="total_hours_booked_adjusted" type="measure" string="Hours Booked (Adjusted)"/>
+                <field name="labor_costs_adjusted" type="measure" string="Labor Costs (Adjusted)"/>
+
+                <!-- Other Costs -->
+                <field name="other_costs_net" type="measure"/>
+
+                <!-- Cost Measures - NET -->
+                <field name="total_costs_net" type="measure"/>
+
+                <!-- Profitability Measures - NET -->
+                <field name="profit_loss_net" type="measure"/>
+                <field name="negative_difference_net" type="measure"/>
+
+                <!-- Dimension fields - available for grouping -->
+                <field name="name" type="row"/>
+                <field name="client_name"/>
+                <field name="stage_id"/>
+                <field name="user_id"/>
+                <field name="partner_id"/>
+                <field name="company_id"/>
+                <field name="create_date" interval="month"/>
+                <field name="date_start" interval="month"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Graph view for visual analytics -->
+    <record id="view_project_graph_account_analytics" model="ir.ui.view">
+        <field name="name">project.project.graph.account.analytics</field>
+        <field name="model">project.project</field>
+        <field name="arch" type="xml">
+            <graph string="Project Statistics Chart" type="bar" sample="1">
+                <field name="name"/>
+                <field name="customer_invoiced_amount_net" type="measure" string="Revenue (NET)"/>
+                <field name="vendor_bills_total_net" type="measure" string="Vendor Bills (NET)"/>
+                <field name="labor_costs_adjusted" type="measure" string="Labor Costs (Adj.)"/>
+                <field name="total_costs_net" type="measure" string="Total Costs (NET)"/>
+                <field name="profit_loss_net" type="measure" string="Profit/Loss (NET)"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Form view for drill-down details -->
+    <record id="view_project_form_account_analytics" model="ir.ui.view">
+        <field name="name">project.project.form.account.analytics</field>
+        <field name="model">project.project</field>
+        <field name="arch" type="xml">
+            <form string="Project Financial Analysis" create="false" edit="false" delete="false">
+                <header>
+                    <button name="%(action_refresh_financial_data_wizard)d" type="action"
+                            string="Refresh Financial Data" class="btn-primary"
+                            help="Recalculate financial data for this project"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_account_moves"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-file-text-o"
+                                string="Invoices &amp; Bills"
+                                help="Show all invoices and bills linked to this project"/>
+                        <button name="action_view_account_analytic_line"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-list"
+                                string="Analytic Entries"
+                                help="Show all analytic entries assigned to this project"/>
+                        <button name="action_open_standard_project_form"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-tasks"
+                                string="Project Details"
+                                help="Open the standard project view"/>
+                    </div>
+
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                        <h3>
+                            <field name="client_name" readonly="1" class="text-muted"/>
+                        </h3>
+                    </div>
+
+                    <!-- Hidden currency field for monetary widgets -->
+                    <field name="currency_id" invisible="1"/>
+
+                    <!-- Data Availability Warning -->
+                    <div class="alert alert-danger" role="alert" invisible="data_availability_status == 'available'">
+                        <strong>⚠️ No Financial Data Available</strong><br/>
+                        This project has no analytic account assigned. All financial fields show 0.00 €.<br/><br/>
+                        <strong>To activate financial data:</strong>
+                        <ol>
+                            <li>Enable "Analytic Accounting" in accounting settings</li>
+                            <li>Assign an analytic account to this project (Plan: Projects)</li>
+                            <li>Ensure invoice lines have "Analytic Distribution" set</li>
+                        </ol>
+                    </div>
+                    <field name="data_availability_status" invisible="1"/>
+                    <field name="has_analytic_account" invisible="1"/>
+
+                    <!-- Key Metrics Overview -->
+                    <group string="📊 Financial Overview" col="3">
+                        <group string="Revenue (NET)">
+                            <field name="customer_invoiced_amount_net" widget="monetary" options="{'currency_field': 'currency_id'}" decoration-bf="True"/>
+                            <field name="customer_paid_amount_net" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="customer_outstanding_amount_net" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                   decoration-danger="customer_outstanding_amount_net &gt; 0"/>
+                        </group>
+                        <group string="Costs (NET)">
+                            <field name="vendor_bills_total_net" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="adjusted_vendor_bill_amount" widget="monetary" options="{'currency_field': 'currency_id'}" decoration-bf="True"
+                                   string="Adj. Vendor Bills"/>
+                            <field name="labor_costs_adjusted" widget="monetary" options="{'currency_field': 'currency_id'}" decoration-bf="True"
+                                   string="Labor Costs (Adj.)"/>
+                            <field name="total_costs_net" widget="monetary" options="{'currency_field': 'currency_id'}" decoration-bf="True"/>
+                        </group>
+                        <group string="📈 Profitability">
+                            <field name="profit_loss_net" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                   decoration-success="profit_loss_net &gt; 0"
+                                   decoration-danger="profit_loss_net &lt; 0"
+                                   decoration-bf="True"/>
+                            <field name="current_calculated_profit_loss" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                   decoration-success="current_calculated_profit_loss &gt; 0"
+                                   decoration-danger="current_calculated_profit_loss &lt; 0"
+                                   decoration-bf="True"
+                                   string="Current P&amp;L (Calc.)"/>
+                            <field name="negative_difference_net" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                   invisible="profit_loss_net &gt;= 0"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="📤 Outgoing Invoices (with Payments)" name="outgoing_invoices">
+                            <!-- Sales Orders Reference -->
+                            <group string="📋 Sales Orders (Reference)">
+                                <group>
+                                    <field name="has_sales_orders" invisible="1"/>
+                                    <field name="sale_order_amount_net" widget="monetary" options="{'currency_field': 'currency_id'}" decoration-bf="True"/>
+                                    <field name="sale_order_tax_names" string="Tax Codes"/>
+                                    <div class="alert alert-warning" role="alert" invisible="has_sales_orders">
+                                        <strong>ℹ️ Fallback Value</strong><br/>
+                                        No linked sales orders found. Showing manual fallback value.
+                                    </div>
+                                </group>
+                                <group>
+                                    <field name="manual_sales_order_amount_net" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <p class="text-muted"><small>Used when no sales orders are linked</small></p>
+                                </group>
+                            </group>
+
+                            <separator string="📊 Outgoing Invoices Breakdown (NET)"/>
+
+                            <!-- Invoices Breakdown -->
+                            <group>
+                                <group string="Invoice Amounts">
+                                    <label for="customer_invoices_net" string="Outgoing Invoices"/>
+                                    <div class="o_row">
+                                        <field name="customer_invoices_net" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                               decoration-bf="True" class="oe_inline"/>
+                                        <span class="text-muted oe_inline">(positive)</span>
+                                    </div>
+                                    <label for="customer_credit_notes_net" string="Credit Notes"/>
+                                    <div class="o_row">
+                                        <field name="customer_credit_notes_net" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                               decoration-danger="customer_credit_notes_net != 0" class="oe_inline"/>
+                                        <span class="text-muted oe_inline">(negative)</span>
+                                    </div>
+                                    <separator/>
+                                    <field name="customer_invoiced_amount_net" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           decoration-bf="True" string="Total Invoiced (NET)"/>
+                                    <field name="customer_skonto_taken" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           string="Cash Discounts Granted" decoration-warning="customer_skonto_taken != 0"/>
+                                </group>
+
+                                <!-- Payment Status -->
+                                <group string="Payment Status">
+                                    <field name="customer_paid_amount_net" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           decoration-success="customer_paid_amount_net &gt; 0"/>
+                                    <field name="customer_outstanding_amount_net" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           decoration-danger="customer_outstanding_amount_net &gt; 0" decoration-bf="True"/>
+                                    <separator string="GROSS Reference (with VAT)"/>
+                                    <field name="customer_invoiced_amount_gross" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           class="text-muted" string="Total Invoiced (GROSS)"/>
+                                    <field name="customer_paid_amount_gross" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           class="text-muted"/>
+                                    <field name="customer_outstanding_amount_gross" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           class="text-muted"/>
+                                </group>
+                            </group>
+
+                            <div class="alert alert-info mt-3" role="alert">
+                                <strong>💡 Info:</strong> Credit notes are shown as negative amounts and reduce the total.
+                                NET amounts are used for profit calculations. GROSS amounts show total including VAT for cash flow reference.
+                            </div>
+                        </page>
+
+                        <page string="📥 Incoming Invoices" name="incoming_invoices">
+                            <separator string="📊 Incoming Invoices Breakdown (NET)"/>
+
+                            <!-- Vendor Bills Breakdown -->
+                            <group>
+                                <group string="Invoice Amounts">
+                                    <label for="vendor_bills_net" string="Incoming Bills"/>
+                                    <div class="o_row">
+                                        <field name="vendor_bills_net" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                               decoration-bf="True" class="oe_inline"/>
+                                        <span class="text-muted oe_inline">(positive)</span>
+                                    </div>
+                                    <label for="vendor_credit_notes_net" string="Credit Notes"/>
+                                    <div class="o_row">
+                                        <field name="vendor_credit_notes_net" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                               decoration-success="vendor_credit_notes_net != 0" class="oe_inline"/>
+                                        <span class="text-muted oe_inline">(negative)</span>
+                                    </div>
+                                    <separator/>
+                                    <field name="vendor_bills_total_net" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           decoration-bf="True" string="Total Vendor Bills (NET)"/>
+                                    <field name="vendor_skonto_received" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           string="Cash Discounts Received" decoration-success="vendor_skonto_received != 0"/>
+                                </group>
+
+                                <!-- Adjusted Costs -->
+                                <group string="Adjusted Costs">
+                                    <field name="adjusted_vendor_bill_amount" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           decoration-bf="True" string="Adjusted Bills (with surcharge)"/>
+                                    <p class="text-muted"><small>Surcharge factor: default 1.30 (30% markup)</small></p>
+                                    <separator string="GROSS Reference (with VAT)"/>
+                                    <field name="vendor_bills_total_gross" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           class="text-muted" string="Total Bills (GROSS)"/>
+                                </group>
+                            </group>
+
+                            <div class="alert alert-info mt-3" role="alert">
+                                <strong>💡 Info:</strong> Credit notes received from vendors are shown as negative amounts and reduce costs.
+                                NET amounts are used for profit calculations. The adjusted vendor bills include a configurable surcharge factor.
+                            </div>
+                        </page>
+
+                        <page string="⏱️ Labor &amp; Internal Costs" name="labor">
+                            <group>
+                                <group string="Time Tracking (Industrial Minutes)">
+                                    <field name="total_hours_booked" digits="[16, 2]"
+                                           string="Total Hours Booked"/>
+                                    <field name="labor_costs" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           string="Labor Costs (Original)"/>
+                                </group>
+                                <group string="Adjusted Calculations (with HFC Factor)">
+                                    <field name="total_hours_booked_adjusted" digits="[16, 2]"
+                                           string="Total Hours (Adjusted)" decoration-bf="True"/>
+                                    <field name="labor_costs_adjusted" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           string="Labor Costs (Adjusted)" decoration-bf="True"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group string="Other Internal Costs">
+                                    <field name="other_costs_net" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="total_costs_net" widget="monetary" options="{'currency_field': 'currency_id'}" decoration-bf="True"
+                                           string="Total Internal Costs"/>
+                                </group>
+                            </group>
+                            <div class="alert alert-success mt-3" role="alert">
+                                <strong>📊 Adjusted Calculations:</strong>
+                                <ul class="mb-0">
+                                    <li><strong>Total Hours (Adjusted):</strong> Sum of (timesheet hours × employee HFC factor)</li>
+                                    <li><strong>Labor Costs (Adjusted):</strong> Total Hours Adjusted × General Hourly Rate (66 EUR)</li>
+                                    <li>This provides standardized cost calculation across all employees</li>
+                                </ul>
+                            </div>
+                        </page>
+
+                        <page string="📈 Profitability Analysis" name="profitability">
+                            <group>
+                                <group string="Profit/Loss Calculation (NET Basis)">
+                                    <field name="customer_invoiced_amount_net" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           string="Revenue (Invoiced NET)"/>
+                                    <field name="customer_skonto_taken" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           string="- Cash Discounts Granted"/>
+                                    <separator string="Costs"/>
+                                    <field name="vendor_bills_total_net" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           string="+ Vendor Bills NET"/>
+                                    <field name="vendor_skonto_received" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           string="- Vendor Discounts Received"/>
+                                    <field name="total_costs_net" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           string="+ Internal Costs NET"/>
+                                    <separator/>
+                                    <field name="profit_loss_net" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           decoration-success="profit_loss_net &gt; 0"
+                                           decoration-danger="profit_loss_net &lt; 0"
+                                           decoration-bf="True"
+                                           string="= Profit/Loss (NET)"/>
+                                </group>
+                                <group string="Current Calculated P&amp;L (Adjusted)">
+                                    <field name="customer_invoiced_amount_net" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           string="Total Invoiced"/>
+                                    <separator string="Adjusted Costs"/>
+                                    <field name="adjusted_vendor_bill_amount" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           string="- Adjusted Vendor Bills"/>
+                                    <field name="labor_costs_adjusted" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           string="- Adjusted Labor Costs"/>
+                                    <field name="other_costs_net" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           string="- Other Costs"/>
+                                    <separator/>
+                                    <field name="current_calculated_profit_loss" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           decoration-success="current_calculated_profit_loss &gt; 0"
+                                           decoration-danger="current_calculated_profit_loss &lt; 0"
+                                           decoration-bf="True"
+                                           string="= Current P&amp;L (Calculated)"/>
+                                </group>
+                                <group string="Additional Metrics">
+                                    <field name="negative_difference_net" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           string="Total Losses (if negative)"/>
+                                    <separator string="GROSS Reference (incl. VAT)"/>
+                                    <field name="customer_invoiced_amount_gross" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           string="Revenue (Invoiced GROSS)"
+                                           class="text-muted"/>
+                                    <field name="vendor_bills_total_gross" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           string="Vendor Bills GROSS"
+                                           class="text-muted"/>
+                                </group>
+                            </group>
+                            <div class="alert alert-success mt-3" role="alert">
+                                <strong>✅ Calculation Formula:</strong><br/>
+                                <code>
+                                    Profit/Loss = (Revenue NET - Customer Discounts) - (Vendor Bills NET - Vendor Discounts + Internal Costs NET)
+                                </code>
+                                <br/><br/>
+                                <strong>Why NET Basis?</strong>
+                                <ul>
+                                    <li>✅ VAT is a pass-through (we collect and remit to tax authority)</li>
+                                    <li>✅ NET-to-NET comparison is accounting-correct</li>
+                                    <li>✅ Shows true profitability without tax distortion</li>
+                                </ul>
+                            </div>
+                        </page>
+
+                        <page string="ℹ️ Project Details" name="details">
+                            <group>
+                                <group string="Project Information">
+                                    <field name="partner_id" string="Customer"/>
+                                    <field name="user_id" string="Project Manager"/>
+                                    <field name="head_of_project" string="Head of Project"/>
+                                    <field name="stage_id" string="Stage"/>
+                                    <field name="company_id" groups="base.group_multi_company"/>
+                                </group>
+                                <group string="Dates">
+                                    <field name="date_start" string="Start Date"/>
+                                    <field name="date" string="End Date"/>
+                                    <field name="create_date" string="Created"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group string="Analytic Accounting">
+                                    <field name="account_id" string="Analytic Account" widget="many2one_clickable"/>
+                                    <field name="has_analytic_account" widget="badge"
+                                           decoration-success="has_analytic_account == True"
+                                           decoration-danger="has_analytic_account == False"
+                                           string="Status"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Custom list view for analytic lines with NET amounts -->
+    <record id="view_account_analytic_line_list_enhanced" model="ir.ui.view">
+        <field name="name">account.analytic.line.list.enhanced</field>
+        <field name="model">account.analytic.line</field>
+        <field name="arch" type="xml">
+            <list string="Analytic Entries" create="false" edit="false" default_order="date desc">
+                <!-- Hidden currency field for monetary widget -->
+                <field name="currency_id" column_invisible="1"/>
+
+                <field name="date" optional="show" string="Date"/>
+                <field name="name" optional="show" width="250px" string="Description"/>
+                <field name="account_id" optional="show" width="180px" string="Analytic Account"/>
+                <field name="partner_id" optional="show" width="180px" string="Partner"/>
+                <field name="product_id" optional="hide" width="180px" string="Product"/>
+                <field name="category" optional="show" width="100px" string="Category"/>
+                <field name="unit_amount" optional="show" sum="Total Hours" digits="[16, 2]" width="100px" string="Hours"/>
+                <field name="amount" optional="show" sum="Total Amount (Net)" widget="monetary" options="{'currency_field': 'currency_id'}" decoration-bf="True" width="130px" string="Amount (NET)"/>
+                <field name="move_line_id" optional="hide" width="200px" string="Journal Item"/>
+                <field name="company_id" optional="hide" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Window action for project analytics -->
+    <record id="action_project_analytics_report" model="ir.actions.act_window">
+        <field name="name">Project Statistics</field>
+        <field name="res_model">project.project</field>
+        <field name="view_mode">list,pivot,graph,form</field>
+        <field name="view_ids" eval="[
+            (5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('view_project_list_account_analytics')}),
+            (0, 0, {'view_mode': 'pivot', 'view_id': ref('view_project_pivot_account_analytics')}),
+            (0, 0, {'view_mode': 'graph', 'view_id': ref('view_project_graph_account_analytics')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('view_project_form_account_analytics')})
+        ]"/>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No projects found</p>
+            <p>This view shows all projects for analysis and reporting purposes with detailed customer and vendor tracking.</p>
+            <p><strong>NET vs. GROSS:</strong></p>
+            <ul>
+                <li><strong>NET Amounts:</strong> Main amounts for profit calculation (without VAT)</li>
+                <li><strong>GROSS Amounts (dark gray):</strong> Total amounts for cash flow analysis (with VAT)</li>
+            </ul>
+        </field>
+    </record>
+
+    <!-- Inherit standard project form to add analytics button and manual sales order field -->
+    <record id="view_project_form_inherit_analytics_button" model="ir.ui.view">
+        <field name="name">project.project.form.inherit.analytics.button</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <!-- Add Financial Analysis button -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_open_analytics_form"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-line-chart"
+                        string="Financial Analysis"
+                        help="Show detailed financial analysis with NET/GROSS comparison"
+                        groups="project.group_project_user"/>
+            </xpath>
+
+            <!-- Add Manual Sales Order field in Settings tab -->
+            <xpath expr="//page[@name='settings']" position="inside">
+                <group string="Financial Data" name="financial_data">
+                    <field name="manual_sales_order_amount_net"
+                           widget="monetary"
+                           options="{'currency_field': 'currency_id'}"
+                           string="Expected Revenue (NET)"/>
+                    <field name="currency_id" invisible="1"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

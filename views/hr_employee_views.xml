@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherit Employee Form View to add Faktor HFC -->
+    <record id="view_employee_form_inherit_faktor_hfc" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit.faktor.hfc</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <!-- Add Faktor HFC to the Work Information page -->
+            <xpath expr="//page[@name='hr_settings']" position="inside">
+                <group string="Project Analytics">
+                    <field name="faktor_hfc" widget="float"
+                           help="Hourly Forecast Correction Factor used to adjust booked hours for this employee. Default is 1.0 (no adjustment)."/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

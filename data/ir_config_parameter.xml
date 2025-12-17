@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- System Parameter: General Hourly Rate for Adjusted Labor Costs -->
+        <record id="project_statistic_general_hourly_rate" model="ir.config_parameter">
+            <field name="key">project_statistic.general_hourly_rate</field>
+            <field name="value">66.0</field>
+        </record>
+
+        <!-- System Parameter: Vendor Bill Surcharge Factor -->
+        <record id="project_statistic_vendor_bill_surcharge_factor" model="ir.config_parameter">
+            <field name="key">project_statistic.vendor_bill_surcharge_factor</field>
+            <field name="value">1.30</field>
+        </record>
+    </data>
+</odoo>
