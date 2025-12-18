@@ -1,20 +1,11 @@
 {
     'name': 'Project Statistic',
-    'version': '18.0.1.2.1',
+    'version': '18.0.1.3.0',
     'category': 'Project',
-    'summary': 'Enhanced project analytics with detailed invoice/bill breakdown',
+    'summary': 'Project financial analytics with NET/GROSS separation',
     'description': """
-        Project Analytics Module
-        ========================
-        Provides comprehensive financial analytics for projects including:
-        - Detailed invoice and credit note tracking (separate fields)
-        - Vendor bill and refund management with surcharge factors
-        - Cost analysis with tax calculations (NET/GROSS)
-        - Multiple profit/loss calculations (standard and adjusted)
-        - Labor cost tracking with adjustable hourly rates
-        - Clean restructured UI with Outgoing/Incoming Invoices
-        - Fixed double-counting in Other Costs (database-level exclusion)
-        - Optional tree view columns for Adj. Vendor Bills and Current P&L
+Project Financial Analytics for Odoo v18 Enterprise.
+See README.md for full documentation.
     """,
     'depends': [
         'project',
