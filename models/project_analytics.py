@@ -301,74 +301,7 @@ class ProjectAnalytics(models.Model):
     def _compute_financial_data(self):
         """
         Compute all financial data for the project based on analytic account lines.
-
-        ==============================================================================
-        ODOO V18 ENTERPRISE INTEGRATION - STANDARD ACCOUNTING MECHANISMS
-        ==============================================================================
-
-        This module integrates seamlessly with Odoo v18 Enterprise Accounting and
-        Analytic Accounting by following standard Odoo mechanisms:
-
-        1. ANALYTIC DISTRIBUTION (Odoo v18 Standard)
-           - Uses analytic_distribution JSON field on account.move.line
-           - Replaces the old analytic_account_id approach from Odoo <v18
-           - Supports multi-dimensional analytics with percentage distribution
-
-        2. CUSTOMER INVOICES & CREDIT NOTES
-           - Read directly from account.move.line with move_type in ['out_invoice', 'out_refund']
-           - Automatically excludes deferred revenue journal entries (move_type='entry')
-           - Handles partial analytic distribution (percentage-based)
-           - Calculates both NET (price_subtotal) and GROSS (price_total)
-
-        3. VENDOR BILLS & REFUNDS
-           - Read directly from account.move.line with move_type in ['in_invoice', 'in_refund']
-           - Automatically excludes deferred expense journal entries (move_type='entry')
-           - Handles partial analytic distribution (percentage-based)
-           - Calculates both NET and GROSS amounts
-
-        4. DEFERRED EXPENSES & REVENUE (Odoo v18 Standard Feature)
-           - When using deferred expenses/revenue, Odoo creates journal entries (move_type='entry')
-           - These are AUTOMATICALLY EXCLUDED from double-counting:
-             * Customer invoices: Only count out_invoice, not deferral entries
-             * Vendor bills: Only count in_invoice, not deferral entries
-             * Other Costs: Explicitly exclude all move_type='entry'
-           - This ensures costs/revenue are counted only once, not per deferral period
-
-        5. TIMESHEETS (hr_timesheet)
-           - Read from account.analytic.line with is_timesheet=True
-           - Automatically created by Odoo when timesheets are logged
-           - Includes HFC factor adjustments for adjusted labor costs
-
-        6. OTHER COSTS
-           - Read from account.analytic.line with is_timesheet=False
-           - EXCLUDES all accounting move types to prevent double-counting:
-             * in_invoice, in_refund (vendor bills - counted separately)
-             * out_invoice, out_refund (customer invoices - counted separately)
-             * entry (journal entries including deferrals - not real costs)
-           - INCLUDES only:
-             * Manual analytic entries without move_line_id
-             * Non-standard cost entries not covered above
-
-        7. CASH DISCOUNTS (Skonto) - German Accounting
-           - Detected via specific account codes (7300-7303, 2130, 4730-4733, 2670)
-           - Counted separately from main costs/revenue
-           - Supports both SKR03 and SKR04 chart of accounts
-
-        CALCULATION APPROACH:
-        ---------------------
-        - NET basis: All calculations use NET (without tax) amounts
-        - GROSS amounts: Provided for reference only
-        - P&L calculations: Compare NET revenue to NET costs (apples to apples)
-        - Adjusted costs: Apply surcharge factors and hourly rates
-
-        TRIGGERS & DEPENDENCIES:
-        ------------------------
-        - account_id: Triggers recompute when project's analytic account changes
-        - Hooks in account_move_line.py: Trigger when invoices/bills change
-        - Hooks in account_analytic_line.py: Trigger when analytic lines change
-        - Manual refresh: Via "Refresh Financial Data" wizard
-
-        This ensures data is always synchronized with Odoo's accounting engine.
+        Uses Odoo v18 analytic_distribution JSON field for project cost allocation.
         """
         # Cache system parameters and project plan ONCE for all projects (performance optimization)
         general_hourly_rate = float(
@@ -428,13 +361,7 @@ class ProjectAnalytics(models.Model):
                 analytic_account = None
 
             if not analytic_account:
-                _logger.warning(
-                    f"Project '{project.name}' (ID: {project.id}) has no analytic account linked. "
-                    f"Financial data cannot be calculated. Please ensure: "
-                    f"1) Analytic Accounting is enabled in Accounting settings, "
-                    f"2) This project has an analytic account assigned (Projects plan), "
-                    f"3) Invoice/bill lines have analytic_distribution set."
-                )
+                _logger.debug(f"Project '{project.name}' (ID: {project.id}) has no analytic account")
                 # Set status fields
                 project.has_analytic_account = False
                 project.data_availability_status = 'no_analytic_account'
@@ -571,31 +498,7 @@ class ProjectAnalytics(models.Model):
             project.current_calculated_profit_loss = current_calculated_profit_loss
 
     def _get_customer_invoices_from_analytic(self, analytic_account):
-        """
-        Get customer invoices and credit notes via analytic_distribution in account.move.line.
-        This is the Odoo v18 way to link invoices to projects.
-
-        IMPORTANT: We calculate BOTH NET and GROSS amounts:
-        - NET: price_subtotal (base amount without taxes)
-        - GROSS: price_total (total amount including all taxes)
-
-        We must calculate the project portion based on invoice LINE amounts,
-        not full invoice amounts, because different lines may go to different projects.
-
-        Handles both:
-        - out_invoice: Customer invoices (positive revenue)
-        - out_refund: Customer credit notes (negative revenue)
-
-        Returns:
-            dict: {
-                'invoiced_net': float,
-                'paid_net': float,
-                'invoiced_gross': float,
-                'paid_gross': float,
-                'invoices_net': float,  # Only out_invoice (positive)
-                'credit_notes_net': float,  # Only out_refund (negative)
-            }
-        """
+        """Get customer invoices/credit notes via analytic_distribution. Returns NET and GROSS amounts."""
         result = {
             'invoiced_net': 0.0,
             'paid_net': 0.0,
@@ -615,7 +518,7 @@ class ProjectAnalytics(models.Model):
             ('display_type', 'not in', ['line_section', 'line_note']),  # Exclude section/note lines
         ])
 
-        _logger.info(f"Found {len(invoice_lines)} potential invoice lines (before analytic filter)")
+        _logger.debug(f"Found {len(invoice_lines)} potential invoice lines")
 
         matched_lines = 0
         for line in invoice_lines:
@@ -662,7 +565,7 @@ class ProjectAnalytics(models.Model):
                     result['invoiced_net'] += line_amount_net
                     result['invoiced_gross'] += line_amount_gross
 
-                    _logger.info(f"  - Invoice {invoice.name}: NET={line_amount_net:.2f}, GROSS={line_amount_gross:.2f}, Account={line.account_id.code} ({line.account_id.account_type})")
+                    _logger.debug(f"Invoice {invoice.name}: NET={line_amount_net:.2f}")
 
                     # Calculate paid amount for this line
                     # Payment proportion = (invoice.amount_total - invoice.amount_residual) / invoice.amount_total
@@ -677,35 +580,12 @@ class ProjectAnalytics(models.Model):
                 _logger.warning(f"Error parsing analytic_distribution for line {line.id}: {e}")
                 continue
 
-        _logger.info(f"Matched {matched_lines} invoice lines for analytic account {analytic_account.id}")
-        _logger.info(f"Result: NET invoiced={result['invoiced_net']:.2f}, GROSS invoiced={result['invoiced_gross']:.2f}")
+        _logger.debug(f"Matched {matched_lines} invoice lines for account {analytic_account.id}")
 
         return result
 
     def _get_vendor_bills_from_analytic(self, analytic_account):
-        """
-        Get vendor bills and refunds via analytic_distribution in account.move.line.
-        This is the Odoo v18 way to link bills to projects.
-
-        IMPORTANT: We calculate BOTH NET and GROSS amounts:
-        - NET: price_subtotal (base amount without taxes)
-        - GROSS: price_total (total amount including all taxes)
-
-        We must calculate the project portion based on bill LINE amounts,
-        not full bill amounts, because different lines may go to different projects.
-
-        Handles both:
-        - in_invoice: Vendor bills (positive cost)
-        - in_refund: Vendor refunds (negative cost)
-
-        Returns:
-            dict: {
-                'total_net': float,
-                'total_gross': float,
-                'bills_net': float,  # Only in_invoice (positive)
-                'credit_notes_net': float,  # Only in_refund (negative)
-            }
-        """
+        """Get vendor bills/refunds via analytic_distribution. Returns NET and GROSS amounts."""
         result = {
             'total_net': 0.0,
             'total_gross': 0.0,
@@ -723,7 +603,7 @@ class ProjectAnalytics(models.Model):
             ('display_type', 'not in', ['line_section', 'line_note']),  # Exclude section/note lines
         ])
 
-        _logger.info(f"Found {len(bill_lines)} potential bill lines (before analytic filter)")
+        _logger.debug(f"Found {len(bill_lines)} potential bill lines")
 
         matched_lines = 0
         for line in bill_lines:
@@ -770,35 +650,18 @@ class ProjectAnalytics(models.Model):
                     result['total_net'] += line_amount_net
                     result['total_gross'] += line_amount_gross
 
-                    _logger.info(f"  - Bill {bill.name}: NET={line_amount_net:.2f}, GROSS={line_amount_gross:.2f}, Account={line.account_id.code} ({line.account_id.account_type})")
+                    _logger.debug(f"Bill {bill.name}: NET={line_amount_net:.2f}")
 
             except Exception as e:
                 _logger.warning(f"Error parsing analytic_distribution for bill line {line.id}: {e}")
                 continue
 
-        _logger.info(f"Matched {matched_lines} bill lines for analytic account {analytic_account.id}")
-        _logger.info(f"Result: NET bills={result['total_net']:.2f}, GROSS bills={result['total_gross']:.2f}")
+        _logger.debug(f"Matched {matched_lines} bill lines for account {analytic_account.id}")
 
         return result
 
     def _get_skonto_from_analytic(self, analytic_account):
-        """
-        Get Skonto (cash discounts) by querying analytic lines from discount accounts.
-
-        This is a simpler and more reliable approach than analyzing reconciliation.
-        Skonto entries are typically posted to specific accounts with analytic distribution.
-
-        Customer Skonto (Gewährte Skonti):
-        - Accounts 7300-7303 (expense - reduces profit)
-        - Account 2130 (liability account for customer discounts)
-
-        Vendor Skonto (Erhaltene Skonti):
-        - Accounts 4730-4733 (income - increases profit)
-        - Account 2670 (asset account for vendor discounts)
-
-        Returns:
-            dict: {'customer_skonto': amount, 'vendor_skonto': amount}
-        """
+        """Get cash discounts (Skonto) from German SKR03/SKR04 discount accounts."""
         result = {'customer_skonto': 0.0, 'vendor_skonto': 0.0}
 
         # Get all analytic lines for this account
@@ -827,13 +690,7 @@ class ProjectAnalytics(models.Model):
         return result
 
     def _get_timesheet_costs(self, analytic_account):
-        """
-        Get timesheet hours and costs from account.analytic.line.
-        Timesheets have is_timesheet=True.
-
-        Returns NET amounts (timesheets don't have VAT).
-        Also calculates adjusted hours based on employee HFC factors.
-        """
+        """Get timesheet hours and costs. Returns adjusted hours based on employee HFC factors."""
         result = {'hours': 0.0, 'costs': 0.0, 'adjusted_hours': 0.0}
 
         # Find all timesheet lines for this analytic account
@@ -859,56 +716,8 @@ class ProjectAnalytics(models.Model):
 
     def _get_other_costs_from_analytic(self, analytic_account):
         """
-        Get other costs from analytic lines that are NOT already counted elsewhere.
-
-        ==============================================================================
-        INTEGRATION WITH ODOO V18 ENTERPRISE ACCOUNTING
-        ==============================================================================
-
-        This method reads from account.analytic.line and carefully excludes all
-        entries that are already counted in other categories to prevent double-counting.
-
-        EXCLUDED (already counted elsewhere):
-        -------------------------------------
-        1. Timesheets (is_timesheet=True)
-           → Counted in labor_costs via _get_timesheet_costs()
-
-        2. Customer Invoices (move_type='out_invoice', 'out_refund')
-           → Counted in customer_invoiced_amount_net via _get_customer_invoices_from_analytic()
-
-        3. Vendor Bills (move_type='in_invoice', 'in_refund')
-           → Counted in vendor_bills_total_net via _get_vendor_bills_from_analytic()
-
-        4. Journal Entries (move_type='entry')
-           → These include:
-             * Deferred Expenses: Auto-generated when using "Deferred Expense" on vendor bills
-             * Deferred Revenue: Auto-generated when using "Deferred Revenue" on customer invoices
-             * Manual Journal Entries: Typically not real project costs, just accounting adjustments
-             * Inter-company transfers, currency adjustments, etc.
-           → Excluding these prevents double-counting deferred costs/revenue
-
-        5. Reversed/Cancelled Entries (reversed_entry_id exists)
-           → Storno entries that cancel out original entries
-
-        6. Cash Discount Accounts (Skonto: 7300-7303, 2130, 4730-4733, 2670)
-           → Counted separately via _get_skonto_from_analytic()
-
-        INCLUDED (real "other costs"):
-        -------------------------------
-        1. Manual analytic entries (no move_line_id)
-           → Direct cost allocations to projects without accounting moves
-
-        2. Non-standard cost entries
-           → Costs from other modules or custom entries not covered above
-
-        USAGE IN STANDARD ODOO V18:
-        ---------------------------
-        - When you post a vendor bill with deferred expenses, Odoo creates:
-          a) Original bill entry (move_type='in_invoice') → Counted in Vendor Bills ✓
-          b) Monthly deferral entries (move_type='entry') → Excluded here ✓
-        - This ensures the cost is counted ONCE, not once per deferral period
-
-        Returns NET amounts (negative values converted to positive).
+        Get other costs excluding timesheets, invoices, bills, journal entries, and Skonto.
+        Prevents double-counting by filtering out already-counted categories.
         """
         other_costs = 0.0
 
@@ -1238,7 +1047,7 @@ class ProjectAnalytics(models.Model):
             chunk_size = 100
             total_projects = len(project_ids_list)
 
-            _logger.info(f"Invalidating cache and triggering recompute for {total_projects} project(s)")
+            _logger.debug(f"Triggering recompute for {total_projects} project(s)")
 
             for i in range(0, total_projects, chunk_size):
                 chunk = project_ids_list[i:i + chunk_size]
