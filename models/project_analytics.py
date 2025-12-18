@@ -107,8 +107,16 @@ class ProjectAnalytics(models.Model):
     def _compute_financial_data(self):
         """Compute all financial data from analytic account lines."""
         ICP = self.env['ir.config_parameter'].sudo()
-        hourly_rate = float(ICP.get_param('project_statistic.general_hourly_rate', '66.0'))
-        surcharge = float(ICP.get_param('project_statistic.vendor_bill_surcharge_factor', '1.30'))
+        try:
+            hourly_rate = float(ICP.get_param('project_statistic.general_hourly_rate', '66.0'))
+        except (ValueError, TypeError):
+            hourly_rate = 66.0
+            _logger.warning("Invalid general_hourly_rate parameter, using default 66.0")
+        try:
+            surcharge = float(ICP.get_param('project_statistic.vendor_bill_surcharge_factor', '1.30'))
+        except (ValueError, TypeError):
+            surcharge = 1.30
+            _logger.warning("Invalid vendor_bill_surcharge_factor parameter, using default 1.30")
         project_plan = self.env.ref('analytic.analytic_plan_projects', raise_if_not_found=False)
 
         for project in self:
@@ -330,26 +338,25 @@ class ProjectAnalytics(models.Model):
         }
 
     def action_view_account_moves(self):
-        """Open account moves linked to this project."""
+        """Open account moves linked to this project via analytic distribution."""
         self.ensure_one()
         if not self.account_id:
             return {'type': 'ir.actions.client', 'tag': 'display_notification',
                     'params': {'message': _('No analytic account found.'), 'type': 'warning'}}
 
-        analytic_id = str(self.account_id.id)
-        move_ids = {
-            line.move_id.id for line in self.env['account.move.line'].search([
-                ('analytic_distribution', '!=', False),
-                ('parent_state', '=', 'posted'),
-            ]) if line.analytic_distribution and analytic_id in line.analytic_distribution
-        }
+        # Use analytic lines to find linked moves (indexed by account_id)
+        analytic_lines = self.env['account.analytic.line'].search([
+            ('account_id', '=', self.account_id.id),
+            ('move_line_id', '!=', False),
+        ])
+        move_ids = analytic_lines.mapped('move_line_id.move_id').ids
 
         return {
             'type': 'ir.actions.act_window',
             'name': _('Account Moves - %s') % self.name,
             'res_model': 'account.move',
             'view_mode': 'list,form',
-            'domain': [('id', 'in', list(move_ids))],
+            'domain': [('id', 'in', move_ids)],
         }
 
     def action_open_analytics_form(self):

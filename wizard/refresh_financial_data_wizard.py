@@ -1,4 +1,15 @@
 from odoo import models, fields, api, _
+import logging
+
+_logger = logging.getLogger(__name__)
+
+
+def _safe_float(value, default):
+    """Safely convert value to float with fallback."""
+    try:
+        return float(value)
+    except (ValueError, TypeError):
+        return default
 
 
 class RefreshFinancialDataWizard(models.TransientModel):
@@ -8,10 +19,10 @@ class RefreshFinancialDataWizard(models.TransientModel):
     general_hourly_rate = fields.Float(
         string='General Hourly Rate (EUR)',
         required=True,
-        default=lambda self: float(
+        default=lambda self: _safe_float(
             self.env['ir.config_parameter'].sudo().get_param(
                 'project_statistic.general_hourly_rate', default='66.0'
-            )
+            ), 66.0
         ),
         help="General hourly rate used to calculate adjusted labor costs. "
              "Formula: Total Hours Booked (Adjusted) × General Hourly Rate = Labor Costs (Adjusted)"
@@ -20,10 +31,10 @@ class RefreshFinancialDataWizard(models.TransientModel):
     vendor_bill_surcharge_factor = fields.Float(
         string='Vendor Bill Surcharge Factor',
         required=True,
-        default=lambda self: float(
+        default=lambda self: _safe_float(
             self.env['ir.config_parameter'].sudo().get_param(
                 'project_statistic.vendor_bill_surcharge_factor', default='1.30'
-            )
+            ), 1.30
         ),
         help="Surcharge factor applied to vendor bills. "
              "Formula: Adjusted Vendor Bill Amount = Vendor Bills (NET) × Surcharge Factor. "
