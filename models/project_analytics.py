@@ -500,20 +500,10 @@ class ProjectAnalytics(models.Model):
             labor_costs = timesheet_data['costs']
             total_hours_booked_adjusted = timesheet_data['adjusted_hours']
 
-            # 4a. Calculate Adjusted Labor Costs using general hourly rate from system parameters
-            general_hourly_rate = float(
-                self.env['ir.config_parameter'].sudo().get_param(
-                    'project_statistic.general_hourly_rate', default='66.0'
-                )
-            )
+            # 4a. Calculate Adjusted Labor Costs using general hourly rate (cached above)
             labor_costs_adjusted = total_hours_booked_adjusted * general_hourly_rate
 
-            # 4b. Calculate Adjusted Vendor Bill Amount using surcharge factor from system parameters
-            vendor_bill_surcharge_factor = float(
-                self.env['ir.config_parameter'].sudo().get_param(
-                    'project_statistic.vendor_bill_surcharge_factor', default='1.30'
-                )
-            )
+            # 4b. Calculate Adjusted Vendor Bill Amount using surcharge factor (cached above)
             adjusted_vendor_bill_amount = vendor_bills_total_net * vendor_bill_surcharge_factor
 
             # 5. Calculate Other Costs (non-timesheet, non-bill analytic lines) - NET amount
@@ -1010,22 +1000,6 @@ class ProjectAnalytics(models.Model):
             'views': [(list_view_id, 'list'), (False, 'form')],
             'domain': [('account_id', '=', analytic_account.id)],
             'context': {'default_account_id': analytic_account.id},
-            'target': 'current',
-        }
-
-    def action_open_project_dashboard(self):
-        """
-        Open the standard project dashboard/form view for this project.
-        Called when clicking a row in the analytics list view.
-        """
-        self.ensure_one()
-        return {
-            'type': 'ir.actions.act_window',
-            'name': self.name,
-            'res_model': 'project.project',
-            'res_id': self.id,
-            'view_mode': 'form',
-            'view_id': False,  # Use default project form view
             'target': 'current',
         }
 
