@@ -61,6 +61,7 @@ class ProjectAnalytics(models.Model):
 
     # Cost/Revenue fields
     other_costs_net = fields.Float(compute='_compute_financial_data', store=True, aggregator='sum')
+    adjusted_other_costs = fields.Float(compute='_compute_financial_data', store=True, aggregator='sum')
     other_revenue_net = fields.Float(compute='_compute_financial_data', store=True, aggregator='sum')
     total_costs_net = fields.Float(compute='_compute_financial_data', store=True, aggregator='sum')
 
@@ -99,6 +100,7 @@ class ProjectAnalytics(models.Model):
         self.labor_costs = 0.0
         self.labor_costs_adjusted = 0.0
         self.other_costs_net = 0.0
+        self.adjusted_other_costs = 0.0
         self.other_revenue_net = 0.0
         self.total_costs_net = 0.0
         self.profit_loss_net = 0.0
@@ -177,6 +179,7 @@ class ProjectAnalytics(models.Model):
 
             # Other costs and revenue
             project.other_costs_net = other['costs']
+            project.adjusted_other_costs = other['costs'] * surcharge
             project.other_revenue_net = other['revenue']
             project.total_costs_net = timesheet['costs'] + other['costs']
 
@@ -185,8 +188,12 @@ class ProjectAnalytics(models.Model):
             costs = vend['net'] - skonto['vendor'] + timesheet['costs'] + other['costs']
             project.profit_loss_net = revenue - costs
             project.negative_difference_net = abs(min(0, project.profit_loss_net))
+            # Current P&L applies surcharge factor to vendor bills and other costs
             project.current_calculated_profit_loss = (
-                cust['net'] + other['revenue'] - (vend['net'] * surcharge) - (timesheet['adjusted'] * hourly_rate) - other['costs']
+                cust['net'] + other['revenue']
+                - (vend['net'] * surcharge)
+                - (timesheet['adjusted'] * hourly_rate)
+                - (other['costs'] * surcharge)
             )
 
     def _get_move_lines_data(self, analytic, move_types):

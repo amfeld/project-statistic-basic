@@ -104,6 +104,9 @@
                 <!-- Other Costs/Revenue -->
                 <field name="other_costs_net" sum="Other Costs (Net)" optional="hide"
                        widget="monetary" options="{'currency_field': 'currency_id'}" width="140px" string="Other Costs"/>
+                <field name="adjusted_other_costs" sum="Adj. Other Costs" optional="hide"
+                       widget="monetary" options="{'currency_field': 'currency_id'}" width="140px" string="Adj. Other Costs"
+                       decoration-bf="True"/>
                 <field name="other_revenue_net" sum="Other Revenue (Net)" optional="hide"
                        widget="monetary" options="{'currency_field': 'currency_id'}" width="140px" string="Other Revenue"
                        decoration-success="other_revenue_net &gt; 0"/>
@@ -168,6 +171,7 @@
 
                 <!-- Other Costs/Revenue -->
                 <field name="other_costs_net" type="measure"/>
+                <field name="adjusted_other_costs" type="measure" string="Adj. Other Costs"/>
                 <field name="other_revenue_net" type="measure"/>
 
                 <!-- Cost Measures - NET -->
@@ -468,13 +472,13 @@
                                            string="Total Invoiced"/>
                                     <field name="other_revenue_net" widget="monetary" options="{'currency_field': 'currency_id'}"
                                            string="+ Other Revenue" decoration-success="other_revenue_net &gt; 0"/>
-                                    <separator string="Adjusted Costs"/>
+                                    <separator string="Adjusted Costs (with surcharge)"/>
                                     <field name="adjusted_vendor_bill_amount" widget="monetary" options="{'currency_field': 'currency_id'}"
                                            string="- Adjusted Vendor Bills"/>
                                     <field name="labor_costs_adjusted" widget="monetary" options="{'currency_field': 'currency_id'}"
                                            string="- Adjusted Labor Costs"/>
-                                    <field name="other_costs_net" widget="monetary" options="{'currency_field': 'currency_id'}"
-                                           string="- Other Costs"/>
+                                    <field name="adjusted_other_costs" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           string="- Adjusted Other Costs" decoration-bf="True"/>
                                     <separator/>
                                     <field name="current_calculated_profit_loss" widget="monetary" options="{'currency_field': 'currency_id'}"
                                            decoration-success="current_calculated_profit_loss &gt; 0"
