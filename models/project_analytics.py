@@ -59,8 +59,9 @@ class ProjectAnalytics(models.Model):
     total_hours_booked_adjusted = fields.Float(compute='_compute_financial_data', store=True, aggregator='sum')
     labor_costs_adjusted = fields.Float(compute='_compute_financial_data', store=True, aggregator='sum')
 
-    # Cost fields
+    # Cost/Revenue fields
     other_costs_net = fields.Float(compute='_compute_financial_data', store=True, aggregator='sum')
+    other_revenue_net = fields.Float(compute='_compute_financial_data', store=True, aggregator='sum')
     total_costs_net = fields.Float(compute='_compute_financial_data', store=True, aggregator='sum')
 
     # Profit/Loss fields
@@ -98,6 +99,7 @@ class ProjectAnalytics(models.Model):
         self.labor_costs = 0.0
         self.labor_costs_adjusted = 0.0
         self.other_costs_net = 0.0
+        self.other_revenue_net = 0.0
         self.total_costs_net = 0.0
         self.profit_loss_net = 0.0
         self.negative_difference_net = 0.0
@@ -139,7 +141,7 @@ class ProjectAnalytics(models.Model):
             skonto = self._get_skonto(analytic)
             sales = self._get_sales_orders(project)
             timesheet = self._get_timesheets(analytic)
-            other = self._get_other_costs(analytic)
+            other = self._get_other_amounts(analytic)
 
             # Customer data
             project.customer_invoiced_amount_net = cust['net']
@@ -173,16 +175,18 @@ class ProjectAnalytics(models.Model):
             project.labor_costs = timesheet['costs']
             project.labor_costs_adjusted = timesheet['adjusted'] * hourly_rate
 
-            # Costs and profit
-            project.other_costs_net = other
-            project.total_costs_net = timesheet['costs'] + other
+            # Other costs and revenue
+            project.other_costs_net = other['costs']
+            project.other_revenue_net = other['revenue']
+            project.total_costs_net = timesheet['costs'] + other['costs']
 
-            revenue = cust['net'] - skonto['customer']
-            costs = vend['net'] - skonto['vendor'] + timesheet['costs'] + other
+            # Profit/Loss calculation (includes other revenue)
+            revenue = cust['net'] - skonto['customer'] + other['revenue']
+            costs = vend['net'] - skonto['vendor'] + timesheet['costs'] + other['costs']
             project.profit_loss_net = revenue - costs
             project.negative_difference_net = abs(min(0, project.profit_loss_net))
             project.current_calculated_profit_loss = (
-                cust['net'] - (vend['net'] * surcharge) - (timesheet['adjusted'] * hourly_rate) - other
+                cust['net'] + other['revenue'] - (vend['net'] * surcharge) - (timesheet['adjusted'] * hourly_rate) - other['costs']
             )
 
     def _get_move_lines_data(self, analytic, move_types):
@@ -258,15 +262,14 @@ class ProjectAnalytics(models.Model):
 
         return result
 
-    def _get_other_costs(self, analytic):
-        """Get other costs excluding timesheets, invoices, bills, and Skonto."""
+    def _get_other_amounts(self, analytic):
+        """Get other costs and revenue excluding timesheets, invoices, bills, and Skonto."""
         SKONTO_CODES = {'7300', '7301', '7302', '7303', '2130', '4730', '4731', '4732', '4733', '2670'}
         EXCLUDED_TYPES = {'in_invoice', 'in_refund', 'out_invoice', 'out_refund', 'entry'}
-        total = 0.0
+        result = {'costs': 0.0, 'revenue': 0.0}
 
         for line in self.env['account.analytic.line'].search([
             ('account_id', '=', analytic.id),
-            ('amount', '<', 0),
             ('is_timesheet', '=', False)
         ]):
             if line.move_line_id:
@@ -276,9 +279,12 @@ class ProjectAnalytics(models.Model):
                     continue
                 if account and account.code in SKONTO_CODES:
                     continue
-            total += abs(line.amount)
+            if line.amount < 0:
+                result['costs'] += abs(line.amount)
+            elif line.amount > 0:
+                result['revenue'] += line.amount
 
-        return total
+        return result
 
     def _get_sales_orders(self, project):
         """Get confirmed sales order data."""

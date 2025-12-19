@@ -101,9 +101,12 @@
                        widget="monetary" options="{'currency_field': 'currency_id'}" decoration-bf="True" width="160px"
                        string="Labor Costs (Adj.)"/>
 
-                <!-- Other Costs -->
+                <!-- Other Costs/Revenue -->
                 <field name="other_costs_net" sum="Other Costs (Net)" optional="hide"
                        widget="monetary" options="{'currency_field': 'currency_id'}" width="140px" string="Other Costs"/>
+                <field name="other_revenue_net" sum="Other Revenue (Net)" optional="hide"
+                       widget="monetary" options="{'currency_field': 'currency_id'}" width="140px" string="Other Revenue"
+                       decoration-success="other_revenue_net &gt; 0"/>
 
                 <!-- Total Cost Fields - NET -->
                 <field name="total_costs_net" sum="Total Costs Net" optional="show"
@@ -163,8 +166,9 @@
                 <field name="total_hours_booked_adjusted" type="measure" string="Hours Booked (Adjusted)"/>
                 <field name="labor_costs_adjusted" type="measure" string="Labor Costs (Adjusted)"/>
 
-                <!-- Other Costs -->
+                <!-- Other Costs/Revenue -->
                 <field name="other_costs_net" type="measure"/>
+                <field name="other_revenue_net" type="measure"/>
 
                 <!-- Cost Measures - NET -->
                 <field name="total_costs_net" type="measure"/>
@@ -420,6 +424,11 @@
                                     <field name="total_costs_net" widget="monetary" options="{'currency_field': 'currency_id'}" decoration-bf="True"
                                            string="Total Internal Costs"/>
                                 </group>
+                                <group string="Other Revenue">
+                                    <field name="other_revenue_net" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           decoration-success="other_revenue_net &gt; 0"/>
+                                    <p class="text-muted"><small>Revenue from analytic entries not linked to invoices</small></p>
+                                </group>
                             </group>
                             <div class="alert alert-success mt-3" role="alert">
                                 <strong>📊 Adjusted Calculations:</strong>
@@ -436,6 +445,8 @@
                                 <group string="Profit/Loss Calculation (NET Basis)">
                                     <field name="customer_invoiced_amount_net" widget="monetary" options="{'currency_field': 'currency_id'}"
                                            string="Revenue (Invoiced NET)"/>
+                                    <field name="other_revenue_net" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           string="+ Other Revenue NET" decoration-success="other_revenue_net &gt; 0"/>
                                     <field name="customer_skonto_taken" widget="monetary" options="{'currency_field': 'currency_id'}"
                                            string="- Cash Discounts Granted"/>
                                     <separator string="Costs"/>
@@ -455,6 +466,8 @@
                                 <group string="Current Calculated P&amp;L (Adjusted)">
                                     <field name="customer_invoiced_amount_net" widget="monetary" options="{'currency_field': 'currency_id'}"
                                            string="Total Invoiced"/>
+                                    <field name="other_revenue_net" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                           string="+ Other Revenue" decoration-success="other_revenue_net &gt; 0"/>
                                     <separator string="Adjusted Costs"/>
                                     <field name="adjusted_vendor_bill_amount" widget="monetary" options="{'currency_field': 'currency_id'}"
                                            string="- Adjusted Vendor Bills"/>
