@@ -2,7 +2,7 @@
 
 Real-time financial analytics module for Odoo v18 projects with NET/GROSS separation, German accounting (SKR03/SKR04), and Skonto tracking.
 
-**Version:** 18.0.1.3.0
+**Version:** 18.0.1.4.0
 **License:** LGPL-3
 **Compatibility:** Odoo v18 Enterprise / Odoo.sh
 
@@ -14,8 +14,9 @@ Real-time financial analytics module for Odoo v18 projects with NET/GROSS separa
 - **Customer invoices** - Track invoiced, paid, and outstanding amounts
 - **Vendor bills** - External costs with surcharge factor
 - **Labor costs** - Timesheet-based with HFC adjustment
+- **Other costs/revenue** - Track non-invoice analytic entries
 - **Skonto tracking** - German cash discount accounts (SKR03/SKR04)
-- **Profit/Loss** - Real-time project profitability
+- **Profit/Loss** - Real-time project profitability with adjusted P&L
 
 ---
 
@@ -82,20 +83,22 @@ Real-time financial analytics module for Odoo v18 projects with NET/GROSS separa
 | `labor_costs` | `sum(abs(line.amount))` from timesheets |
 | `labor_costs_adjusted` | `adjusted_hours * general_hourly_rate` |
 
-### Cost Fields
+### Cost/Revenue Fields
 
 | Field | Calculation |
 |-------|-------------|
-| `other_costs_net` | Non-timesheet, non-invoice analytic costs |
+| `other_costs_net` | Non-timesheet, non-invoice analytic costs (negative amounts) |
+| `adjusted_other_costs` | `other_costs_net * surcharge_factor` |
+| `other_revenue_net` | Non-timesheet, non-invoice analytic revenue (positive amounts) |
 | `total_costs_net` | `labor_costs + other_costs_net` |
 
 ### Profit/Loss Fields
 
 | Field | Calculation |
 |-------|-------------|
-| `profit_loss_net` | `(invoiced_net - customer_skonto) - (vendor_bills_net - vendor_skonto + total_costs_net)` |
+| `profit_loss_net` | `(invoiced_net + other_revenue - customer_skonto) - (vendor_bills_net - vendor_skonto + total_costs_net)` |
 | `negative_difference_net` | `abs(min(0, profit_loss_net))` |
-| `current_calculated_profit_loss` | `invoiced_net - adjusted_vendor_bills - adjusted_labor - other_costs` |
+| `current_calculated_profit_loss` | `invoiced_net + other_revenue - adjusted_vendor_bills - adjusted_labor - adjusted_other_costs` |
 
 ---
 
@@ -124,7 +127,7 @@ amount = line.price_subtotal * pct
 
 ### Profit/Loss (NET)
 ```python
-revenue = customer_invoiced_amount_net - customer_skonto_taken
+revenue = customer_invoiced_amount_net + other_revenue_net - customer_skonto_taken
 costs = vendor_bills_total_net - vendor_skonto_received + total_costs_net
 profit_loss_net = revenue - costs
 ```
@@ -133,9 +136,10 @@ profit_loss_net = revenue - costs
 ```python
 current_calculated_profit_loss = (
     customer_invoiced_amount_net
+    + other_revenue_net
     - (vendor_bills_total_net * surcharge_factor)
     - (total_hours_booked_adjusted * hourly_rate)
-    - other_costs_net
+    - (other_costs_net * surcharge_factor)
 )
 ```
 
@@ -151,7 +155,7 @@ current_calculated_profit_loss = (
 | `_get_move_lines_data(analytic, move_types)` | Unified invoice/bill extraction |
 | `_get_skonto(analytic)` | Cash discount from SKR03/SKR04 accounts |
 | `_get_timesheets(analytic)` | Hours and costs with HFC adjustment |
-| `_get_other_costs(analytic)` | Non-duplicate cost extraction |
+| `_get_other_amounts(analytic)` | Other costs (negative) and revenue (positive) |
 | `_get_sales_orders(project)` | Confirmed sales order data |
 | `trigger_recompute_for_analytic_accounts(ids)` | Hook trigger for auto-refresh |
 
@@ -233,6 +237,13 @@ odoo-bin -c odoo.conf -d test_db -i project_statistic --test-enable --stop-after
 ---
 
 ## Changelog
+
+### v18.0.1.4.0
+- Added `other_revenue_net` field for non-invoice positive analytic entries
+- Added `adjusted_other_costs` field (other costs × surcharge factor)
+- Updated profit/loss calculations to include other revenue
+- Current P&L now applies surcharge factor to both vendor bills and other costs
+- Refactored `_get_other_costs()` to `_get_other_amounts()` returning both costs and revenue
 
 ### v18.0.1.3.0
 - Simplified codebase following KISS principles (62% reduction)

@@ -1,6 +1,6 @@
 {
     'name': 'Project Statistic',
-    'version': '18.0.1.3.0',
+    'version': '18.0.1.4.0',
     'category': 'Project',
     'summary': 'Project financial analytics with NET/GROSS separation',
     'description': """
