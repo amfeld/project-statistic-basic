@@ -4,8 +4,17 @@
     'category': 'Project',
     'summary': 'Project financial analytics with NET/GROSS separation',
     'description': """
-Project Financial Analytics for Odoo v18 Enterprise.
-See README.md for full documentation.
+        Project Analytics Module
+        ========================
+        Provides comprehensive financial analytics for projects including:
+        - Detailed invoice and credit note tracking (separate fields)
+        - Vendor bill and refund management with surcharge factors
+        - Cost analysis with tax calculations (NET/GROSS)
+        - Multiple profit/loss calculations (standard and adjusted)
+        - Labor cost tracking with adjustable hourly rates
+        - Clean restructured UI with Outgoing/Incoming Invoices
+        - Fixed double-counting in Other Costs (database-level exclusion)
+        - Optional tree view columns for Adj. Vendor Bills and Current P&L
     """,
     'depends': [
         'project',
